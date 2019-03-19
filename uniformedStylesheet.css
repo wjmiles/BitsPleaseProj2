@@ -108,7 +108,7 @@ input {
 	border-bottom: 		 1px solid #F0F0F0;
 	width: 				 100%;
 }
-
+/* 
 #comment {
 	height: 			 350px;
 	color: 				 #113A5B;
@@ -120,7 +120,7 @@ input {
 	box-shadow: 		 inset 0 0 1px #888;
 	border-bottom: 		 1px solid #F0F0F0;
 	width: 				 100%;
-}
+} */
 
 .footer {
 	background-color: #003B53;
