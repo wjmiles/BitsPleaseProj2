@@ -4,8 +4,9 @@
 	<meta charset="UTF-8">
 	<title>Comment Submission</title>
 	<link rel="icon" href="https://1000logos.net/wp-content/uploads/2017/11/USAA-Logo.png">
+	<link rel="stylesheet" type="text/css" href="uniformedStylesheet.css">
 
-	<style type="text/css">
+	<!-- <style type="text/css">
 		html {
 			background: linear-gradient(to bottom,#EEEEEE,#E0E0E0);
 		}
@@ -16,14 +17,15 @@
 			   border: none;
 			   box-shadow: inset 0 1px 1px rgba(255,255,255,.2), 0 1px 1px rgba(0,0,0,.3);
 			   height: 55px;
-			   width: 10%;
+			   width: 70%;
 			   font-family: GothamBook;
 			   font-size: 30px;
 			   border-radius: 6px;
 			   background: linear-gradient(to bottom,#3F7190,#00375C);
 			   font-weight: 700;
-			   margin-top: 25px;
-			   margin: auto;
+			   0margin-top: 25px;
+			   margin-left: auto;
+			   margin-right: auto;
 		}
 
 		header {
@@ -89,17 +91,21 @@
 		   background-color: #003B53;
 		   z-index: 10;
 		   color: white;
+		   position: fixed;
+		   bottom: 0;
 		}
-	</style>
+	</style>  -->
 </head>
 
 <body>
-	<header>
-		<img src="https://content.usaa.com/mcontent/static_assets/Media/globalHeader-usaaLogo-2016.svg" id="headerImg"></img>
-
-		<div style="text-align: right;">
-			fName lName
-			<a href="">Log Off</a>
+	<header class="header">
+		<a id="headerHomeAnchor" href=""><img src="https://1000logos.net/wp-content/uploads/2017/11/USAA-Logo.png" id="headerImg"></img></a>
+		<h1>Topic Submission</h1>
+		<div id="userInfo">
+			<p><span id="userNameId">firstName lastName</span><br>
+			<input type="button" value="Log Off" id="logOffId" class="headerButton">
+			<a href='profile.html'><input type="button" value="Profile" id="profileId" class="headerButton"></a>
+			</p>
 		</div>
 	</header>
 
@@ -113,13 +119,18 @@
 		Location:
 		<select>
 			<option>Location</option>
-			<option>Texas</option>
-			<option>Arizona</option>
-			<option>Florida</option>
-			<option>Colorado</option>
-			<option>Virginia</option>
-			<option>Germany</option>
-			<option>England</option>
+			<option>San Antonio, TX</option>
+			<option>Austin, TX</option>
+			<option>Dallas, TX</option>
+			<option>Phoenix, AZ</option>
+			<option>Tampa, FL</option>
+			<option>Colorado Springs, CO</option>
+			<option>Chesapeake, VA</option>
+			<option>Annapolis, MD</option>
+			<option>New York, NY</option>
+			<option>Frankfurt, Germany</option>
+			<option>London, England</option>
+			<option>Home</option>
 		</select>
 		<br><br>
 		Topic
@@ -128,15 +139,19 @@
 		Comment
 		<textarea name="comment" id="comment"></textarea>
 		<br><br>
-		<button value="Submit">Submit</button>
+		<button id="submitTopicButtonId" class="formButton" value="Submit">Submit</button>
 	</form>
 
 	<br><br><br>
 
-	<footer>
+	<footer class="footer">
+		<p>
 		Bits Please...
 		<br>
-		Henry Mackey | Xiaocan Huang | Jinggu Jiang | Jeremiah Leynes | William Miles | Joseph Pratt
+		Xiaocan Huang | Jinggu Jiang | Jeremiah Leynes | Henry Mackey | William Miles | Joseph Pratt
+		<br>
+		2019
+		</p>
 	</footer>
 </body>
 </html>
