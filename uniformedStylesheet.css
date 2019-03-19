@@ -110,7 +110,7 @@ input {
 }
 
 #comment {
-	height: 			 3500px;
+	height: 			 350px;
 	color: 				 #113A5B;
 	font-size: 			 18px;
 	background-repeat: 	 no-repeat;
@@ -131,7 +131,7 @@ input {
 	max-height: 	  55px;
 	margin-top: 	  48px;
 	clear: 			  both;
-/* 	position: 		  fixed; */
+ 	position: 		  fixed; 
 	bottom: 		  0;
 	text-align: 	  center;
 	font-size: 		  14px;
@@ -139,4 +139,9 @@ input {
 
 .footer p {
 	margin-top: 2px;
+}
+
+.footer a {
+	color: 			 #73A7C1;
+	text-decoration: none;
 }
