@@ -131,7 +131,7 @@ input {
 	max-height: 	  55px;
 	margin-top: 	  48px;
 	clear: 			  both;
-	position: 		  fixed;
+/* 	position: 		  fixed; */
 	bottom: 		  0;
 	text-align: 	  center;
 	font-size: 		  14px;
