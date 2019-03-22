@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Employee Profile</title>
+	<link rel="icon" href="../images/logo.png" >
+	<link rel="stylesheet" type="text/css" href="../css/uniformedStylesheet.css">
+</head>
+<body onload="loadProfile()">
+    <header class="header">
+        <a id="headerHomeAnchor" href="./main.html"><img src="../images/logo.png" id="headerImg" alt="logo"></img></a>
+        <h1>Employee Profile</h1>
+        <div id="userInfo">
+            <p>
+                <span id="userNameId">firstName lastName</span><br>
+                <input type="button" value="Log Off" id="logOffId" class="headerButton">
+                <a href='profile.html'><input type="button" value="Profile" id="profileId" class="headerButton"></a>
+            </p>
+        </div>
+    </header>
+    <div class="content">
+        <table>
+            <tr>
+                <td><input id="employeeId" type="text" placeholder="Eagle ID" readonly required></td>
+            </tr>
+            <tr>
+                <td><input id="passwordId" type="text" placeholder="Password" required></td>
+            </tr>
+            <tr>
+                <td><input id="firstNameId" type="text" placeholder="First Name" readonly required></td>
+            </tr>
+            <tr>
+                <td><input id="lastNameId" type="text" placeholder="Last Name" readonly required></td>
+            </tr>
+            <tr>
+                <td><input id="positionId" type="text" placeholder="Position" readonly required></td>
+            </tr>
+            <tr>
+                <td><input id="departmentId" type="text" placeholder="Department" readonly required></td>
+            </tr>
+            <tr>
+                <td><input id="locationId" type="text" placeholder="Location" readonly required></td>
+            </tr>
+            <tr>
+                <td>badge</td>
+            </tr>
+            <tr>
+                <td><input type="button" value="Update" onclick="" class="formButton"></td>
+            </tr>
+        </table>
+    </div>
+    <footer class="footer">
+        <p>
+            Bits Please...
+            <br>
+            <a href="https://www.linkedin.com/in/xiaocan-huang-1841b7139/" target="_blank">Xiaocan Huang</a> | 
+            <a href="https://www.linkedin.com/in/jinggu-jiang-link/" target="_blank">Jinggu Jiang</a> | 
+            <a href="https://www.linkedin.com/in/jeremiah-leynes-a6616a146/" target="_blank">Jeremiah Leynes</a> | 
+            <a href="https://www.linkedin.com/in/henry-mack-mackey-0a15a916b/" target="_blank">Henry Mackey</a> | 
+            <a href="https://www.linkedin.com/in/william-miles-1836ab167/" target="_blank">William Miles</a> | 
+            <a href="https://www.linkedin.com/in/joseph-pratt-71a3ba149/" target="_blank">Joseph Pratt</a>
+            <br>
+            2019
+        </p>
+    </footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="../js/BPP2.js" type="text/javascript"></script>
+
+</body>
+</html>
