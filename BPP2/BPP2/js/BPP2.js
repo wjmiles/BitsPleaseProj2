@@ -61,6 +61,7 @@ function loadMain() {
 function loadProfile() {
     showName();
     showInfo();
+    showBadges();
 }
 
 //submission.html
@@ -183,6 +184,43 @@ function editAccountInfo() {
         dataType: "json",
         success: function (msg) {
             loadAccountInfo();
+        }
+    });
+}
+
+// profile.html
+// show badges the user has earned
+function showBadges() {
+    let storedParam = localStorage.getItem("employeeId");
+
+    let webMethod = "../BPP2.asmx/GetAccount";
+    let parameters = "{\"employeeId\":\"" + encodeURI(storedParam) + "\"}";
+
+    $.ajax({
+        type: "POST",
+        url: webMethod,
+        data: parameters,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+            if (msg.d.length > 0) {
+                accountArray = msg.d;
+                for (let i = 0; i < accountArray.length; i++) {
+                    if (accountArray[i].employeeId !== null) {
+                        if (accountArray[i].badge == 1)
+                            document.getElementById("badgeImg").src = "../images/1.png";
+                        else if (accountArray[i].badge == 2)
+                            document.getElementById("badgeImg").src = "../images/2.png";
+                        else if (accountArray[i].badge == 3)
+                            document.getElementById("badgeImg").src = "../images/3.png";
+                        else if (accountArray[i].badge == 4)
+                            document.getElementById("badgeImg").src = "../images/4.png";
+                        else if (accountArray[i].badge == 5)
+                            document.getElementById("badgeImg").src = "../images/5.png";
+                    }
+                    console.log(document.getElementById("badgeImg").src);
+                }
+            }
         }
     });
 }
