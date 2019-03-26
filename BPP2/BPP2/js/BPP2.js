@@ -14,14 +14,6 @@ function logOn(employeeId, password) {
     
     if (employeeId === "" ||
         password === "") {
-        //if (logOnAttempts !== 1) {
-        //    let para = document.createElement("p");
-        //    let node = document.createTextNode("Please enter an ID and Password.");
-        //    para.appendChild(node);
-        //    let element = document.getElementById("alertId");
-        //    element.appendChild(para);
-        //    logOnAttempts = 1;
-        //}
         document.getElementById("alertId").innerHTML = "Please enter an ID and Password";
         document.getElementById("password").value = "";
     }
@@ -44,24 +36,17 @@ function logOn(employeeId, password) {
                     window.open("../html/main.html", "_self");
                 }
                 else {
-                    //if (logOnAttempts !== 2) {
-                    //    let para = document.createElement("p");
-                    //    let node = document.createTextNode("Sign In Failed");
-                    //    para.appendChild(node);
-                    //    let element = document.getElementById("alertId");
-                    //    element.appendChild(para);
-                    //    logOnAttempts = 2;
-                    //    //alert("Sign In Failed");
                     document.getElementById("alertId").innerHTML = "Sign in Failed";
-                        document.getElementById("password").value = "";
-
-                    //}
+                    document.getElementById("password").value = "";
                 }
             }
         });
     }
 }
 
+//main.html
+//profile.html
+//submission.html
 function logOff() {
     localStorage.clear();
     window.open("../html/logIn.html", "_self");
@@ -91,7 +76,6 @@ function loadSubmission() {
 //submission.html
 //stores topic 
 function storeTopic() {
-
     var topicTitle, category, location, comment;
 
     topicTitle = document.getElementById("topicTitle").value;
@@ -101,19 +85,58 @@ function storeTopic() {
 
     addTopicToDatabase(topicTitle, category, location, comment);
 
-    document.getElementById("topicTitle").value = "";
-    document.getElementById("category").value = "";
-    document.getElementById("location").value = "";
-    document.getElementById("comment").value = "";
+    //document.getElementById("topicTitle").value = "";
+    //document.getElementById("category").value = "";
+    //document.getElementById("location").value = "";
+    //document.getElementById("comment").value = "";
 }
 
 //submission.html
 //adds the topic to the database
 function addTopicToDatabase(topicTitle, category, location, comment) {
-    var webMethod = "../BPPP2.asmx/SubmitTopic";
-    var parameters = "{\"topicTitle\":\"" + encodeURI(topicTitle) +
+
+    let storedParam = localStorage.getItem("employeeId");
+
+    let webMethod = "../BPP2.asmx/SubmitTopic";
+    let parameters = "{\"employeeId\":\"" + encodeURI(storedParam) +
+                     "\",\"topicTitle\":\"" + encodeURI(topicTitle) +
                      "\",\"category\":\"" + encodeURI(category) +
-                     "\",\"location\":\"" + encodeURI(location) +
+                     "\",\"location\":\"" + encodeURI(location) + "\"}";
+                     //"\",\"comment\":\"" + encodeURI(comment) + 
+
+
+    $.ajax({
+        type: "POST",
+        url: webMethod,
+        data: parameters,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+            if (msg.d.length > 0) {
+                console.log(msg.d);
+                var funcRet = msg.d;
+                var topicId = funcRet[0].TopicID;
+                //localStorage.setItem("topicTitle", topicTitle[0].topicTitle);
+                addCommentToDB(topicId, comment);
+                console.log("Might of worked! :)");
+            }
+            //console.log(parameters);
+        },
+        error: function (e) {
+            alert("Probably didn't work :(");
+            //console.log(parameters);
+        }
+    });
+}
+
+//submission.html
+//adds comment to the db
+function addCommentToDB(topicId, comment) {
+    alert(topicId);
+    alert(comment);
+
+    let webMethod = "../BPP2/SubmitComment";
+    let parameters = "{\"topicId\":\"" + encodeURI(topicId) +
                      "\",\"comment\":\"" + encodeURI(comment) + "\"}";
 
     $.ajax({
@@ -123,12 +146,11 @@ function addTopicToDatabase(topicTitle, category, location, comment) {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (msg) {
-            alert("Might of worked! :)");
-            //console.log(parameters);
+            console.log("Might of worked");
+            window.open("../html/main.html", "_self");
         },
         error: function (e) {
-            alert("Probably didn't work :(");
-            //console.log(parameters);
+            console.log("Probaably Not!");
         }
     });
 }
@@ -155,6 +177,7 @@ function showName() {
             dataType: "json",
             success: function (msg) {
                 if (msg.d.length > 0) {
+                    console.log(msg.d);
                     accountArray = msg.d;
                     for (let i = 0; i < accountArray.length; i++) {
                         if (accountArray[i].employeeId !== null) {

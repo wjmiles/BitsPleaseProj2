@@ -7,7 +7,11 @@ namespace BPP2
 {
     public class Topic
     {
+        public int TopicID;
+        public string EmployeeID;
         public string Title;
+        public string Category;
+        public string Location;
         public int Relevance;
     }
 }

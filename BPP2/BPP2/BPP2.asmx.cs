@@ -129,18 +129,64 @@ namespace BPP2
 
         //add topic
         [WebMethod(EnableSession = true)]
-        public string SubmitTopic(string topicTitle, string category, string location, string comment)
+        public Topic[] SubmitTopic(string employeeId, string topicTitle, string category, string location) //, string comment)
         {
+            DataTable sqlDt = new DataTable("topic");
+
             string sqlConnectionSring = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
 
-            string sqlSelect = "INSERT INTO topics (TopicTitle, TopicCategory, TopicLocation) VALUES (@topicTitleValue, @categoryValue, @locationValue);";
+            string sqlSelect = "INSERT INTO `topics` (`EmployeeID`, `TopicTitle`, `TopicCategory`, `TopicLocation`) VALUES (@employeeIdValue, @topicTitleValue, @categoryValue, @locationValue);";
 
             MySqlConnection sqlConnection = new MySqlConnection(sqlConnectionSring);
             MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
 
+            sqlCommand.Parameters.AddWithValue("@employeeIdValue", HttpUtility.UrlDecode(employeeId));
             sqlCommand.Parameters.AddWithValue("@topicTitleValue", HttpUtility.UrlDecode(topicTitle));
             sqlCommand.Parameters.AddWithValue("@categoryValue", HttpUtility.UrlDecode(category));
             sqlCommand.Parameters.AddWithValue("@locationValue", HttpUtility.UrlDecode(location));
+            //sqlCommand.Parameters.AddWithValue("@commentValue", HttpUtility.UrlDecode(comment));
+
+            MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
+            sqlDa.Fill(sqlDt);
+
+            List<Topic> topic = new List<Topic>();
+            for (int i = 0; i < sqlDt.Rows.Count; i++)
+            {
+                topic.Add(new Topic
+                {
+                    TopicID = Convert.ToInt32(sqlDt.Rows[i]["TopicID"]),
+                    EmployeeID = sqlDt.Rows[i]["EmployeeID"].ToString(),
+                    Title = sqlDt.Rows[i]["TopicTitle"].ToString(),
+                    Category = sqlDt.Rows[i]["TopicCategory"].ToString(),
+                    Location = sqlDt.Rows[i]["TopicLocation"].ToString(),
+                    Relevance = Convert.ToInt32(sqlDt.Rows[i]["TopicRelevenceCounter"])
+                });
+            }
+
+            //sqlConnection.Open();
+            //try
+            //{
+            //    sqlCommand.ExecuteNonQuery();
+            //}
+            //catch (Exception e)
+            // {
+            //}
+            //sqlConnection.Close();
+
+            return topic.ToArray();
+        }
+
+        [WebMethod(EnableSession = true)]
+        public void SubmitComment(string topicId, string comment)
+        {
+            string sqlConnectionSring = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
+
+            string sqlSelect = "INSERT INTO suggestions (TopicID, SuggestionContent) VALUES (@topicIdValue, @commentValue);";
+
+            MySqlConnection sqlConnection = new MySqlConnection(sqlConnectionSring);
+            MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+            sqlCommand.Parameters.AddWithValue("@topicIdValue", HttpUtility.UrlDecode(topicId));
             sqlCommand.Parameters.AddWithValue("@commentValue", HttpUtility.UrlDecode(comment));
 
             sqlConnection.Open();
@@ -152,8 +198,6 @@ namespace BPP2
             {
             }
             sqlConnection.Close();
-
-            return topicTitle;
         }
 
         //get topics to populate topic list
