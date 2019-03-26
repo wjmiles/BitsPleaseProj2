@@ -70,6 +70,51 @@ function loadSubmission() {
     showName();
 }
 
+//submission.html
+//stores topic 
+function storeTopic() {
+
+    var topicTitle, category, location, comment;
+
+    topicTitle = document.getElementById("topicTitle").value;
+    category = document.getElementById("category").value;
+    location = document.getElementById("location").value;
+    comment = document.getElementById("comment").value;
+
+    addTopicToDatabase(topicTitle, category, location, comment);
+
+    document.getElementById("topicTitle").value = "";
+    document.getElementById("category").value = "";
+    document.getElementById("location").value = "";
+    document.getElementById("comment").value = "";
+}
+
+//submission.html
+//adds the topic to the database
+function addTopicToDatabase(topicTitle, category, location, comment) {
+    var webMethod = "../BPPP2.asmx/SubmitTopic";
+    var parameters = "{\"topicTitle\":\"" + encodeURI(topicTitle) +
+                     "\",\"category\":\"" + encodeURI(category) +
+                     "\",\"location\":\"" + encodeURI(location) +
+                     "\",\"comment\":\"" + encodeURI(comment) + "\"}";
+
+    $.ajax({
+        type: "POST",
+        url: webMethod,
+        data: parameters,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+            alert("Might of worked! :)");
+            //console.log(parameters);
+        },
+        error: function (e) {
+            alert("Probably didn't work :(");
+            //console.log(parameters);
+        }
+    });
+}
+
 //main.html
 //profile.html
 //submission.html

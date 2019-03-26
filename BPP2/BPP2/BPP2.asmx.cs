@@ -126,5 +126,34 @@ namespace BPP2
             }
             sqlConnection.Close();
         }
+
+        //add topic
+        [WebMethod(EnableSession = true)]
+        public string SubmitTopic(string topicTitle, string category, string location, string comment)
+        {
+            string sqlConnectionSring = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
+
+            string sqlSelect = "INSERT INTO topics (TopicTitle, TopicCategory, TopicLocation) VALUES (@topicTitleValue, @categoryValue, @locationValue);";
+
+            MySqlConnection sqlConnection = new MySqlConnection(sqlConnectionSring);
+            MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+            sqlCommand.Parameters.AddWithValue("@topicTitleValue", HttpUtility.UrlDecode(topicTitle));
+            sqlCommand.Parameters.AddWithValue("@categoryValue", HttpUtility.UrlDecode(category));
+            sqlCommand.Parameters.AddWithValue("@locationValue", HttpUtility.UrlDecode(location));
+            sqlCommand.Parameters.AddWithValue("@commentValue", HttpUtility.UrlDecode(comment));
+
+            sqlConnection.Open();
+            try
+            {
+                sqlCommand.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+            }
+            sqlConnection.Close();
+
+            return topicTitle;
+        }
     }
 }

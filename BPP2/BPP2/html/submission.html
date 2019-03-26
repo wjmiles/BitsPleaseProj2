@@ -115,33 +115,33 @@
 
     <form id="suggestion">
         Category:
-        <select>
-            <option>Category</option>
+        <select id="category">
+            <option value="default">Category</option>
         </select>
         Location:
-        <select>
+        <select id="location">
             <option>Location</option>
-            <option>San Antonio, TX</option>
-            <option>Austin, TX</option>
-            <option>Dallas, TX</option>
-            <option>Phoenix, AZ</option>
-            <option>Tampa, FL</option>
-            <option>Colorado Springs, CO</option>
-            <option>Chesapeake, VA</option>
-            <option>Annapolis, MD</option>
-            <option>New York, NY</option>
-            <option>Frankfurt, Germany</option>
-            <option>London, England</option>
-            <option>Home</option>
+            <option value="San Antonio, TX">San Antonio, TX</option>
+            <option value="Austin, TX">Austin, TX</option>
+            <option value="Dallas, TX">Dallas, TX</option>
+            <option value="Phoenix, AZ">Phoenix, AZ</option>
+            <option value="Tampa, FL">Tampa, FL</option>
+            <option value="Colorado Springs, CO">Colorado Springs, CO</option>
+            <option value="Chesapeake, VA">Chesapeake, VA</option>
+            <option value="Annapolis, MD">Annapolis, MD</option>
+            <option value="New York, NY">New York, NY</option>
+            <option value="Frankfurt, Germany">Frankfurt, Germany</option>
+            <option value="London, England">London, England</option>
+            <option value="Home">Home</option>
         </select>
         <br><br>
         Topic
-        <input type="text" name="topic" maxlength="180">
+        <input type="text" name="topic" id="topicTitle" maxlength="180">
         <br><br>
         Comment
         <textarea name="comment" id="comment"></textarea>
         <br><br>
-        <button id="submitTopicButtonId" class="formButton" value="Submit">Submit</button>
+        <button id="submitTopicButtonId" class="formButton" value="Submit" onclick="storeTopic();">Submit</button>
     </form>
 
     <br><br><br>
