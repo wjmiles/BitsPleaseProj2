@@ -155,5 +155,32 @@ namespace BPP2
 
             return topicTitle;
         }
+
+        //get topics to populate topic list
+        [WebMethod(EnableSession = true)]
+        public Topic[] GetTopics()
+        {
+            string sqlConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
+            string sqlSelect = "SELECT TopicTitle, TopicRelevanceCounter FROM topics";
+
+            MySqlConnection sqlConnection = new MySqlConnection(sqlConnectionString);
+            MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+            MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
+            DataTable sqlDt = new DataTable();
+
+            sqlDa.Fill(sqlDt);
+
+            List<Topic> topics = new List<Topic>();
+            for (int i = 0; i < sqlDt.Rows.Count; i++)
+            {
+                topics.Add(new Topic
+                {
+                    Title = sqlDt.Rows[i]["TopicTitle"].ToString(),
+                    Relevance = Convert.ToInt32(sqlDt.Rows[i]["TopicRelevanceCounter"])
+                });
+            }
+            return topics.ToArray();
+        }
     }
 }
