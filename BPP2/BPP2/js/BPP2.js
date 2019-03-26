@@ -10,18 +10,19 @@ var logOnAttempts = 0;
 //checks DB for employeeId and password and stores employeeId in localStorage for reference on other html pages
 function logOn(employeeId, password) {
 
-    //let alert = document.getElementById(alertId);
+    localStorage.clear();
     
     if (employeeId === "" ||
         password === "") {
-        if (logOnAttempts === 0) {
-            let para = document.createElement("p");
-            let node = document.createTextNode("Please enter an ID and Password.");
-            para.appendChild(node);
-            let element = document.getElementById("alertId");
-            element.appendChild(para);
-            logOnAttempts += 1;
-        }
+        //if (logOnAttempts !== 1) {
+        //    let para = document.createElement("p");
+        //    let node = document.createTextNode("Please enter an ID and Password.");
+        //    para.appendChild(node);
+        //    let element = document.getElementById("alertId");
+        //    element.appendChild(para);
+        //    logOnAttempts = 1;
+        //}
+        document.getElementById("alertId").innerHTML = "Please enter an ID and Password";
         document.getElementById("password").value = "";
     }
     else {
@@ -38,23 +39,39 @@ function logOn(employeeId, password) {
                 if (msg.d.length > 0) {
                     accountArray = msg.d;
                     localStorage.setItem("employeeId", accountArray[0].employeeId);
+                    document.getElementById("employeeId").value = "";
+                    document.getElementById("password").value = "";
                     window.open("../html/main.html", "_self");
                 }
                 else {
-                    console.log(employeeId);
-                    console.log(password);
-                    alert("Sign In Failed");
-                    document.getElementById("password").value = "";
+                    //if (logOnAttempts !== 2) {
+                    //    let para = document.createElement("p");
+                    //    let node = document.createTextNode("Sign In Failed");
+                    //    para.appendChild(node);
+                    //    let element = document.getElementById("alertId");
+                    //    element.appendChild(para);
+                    //    logOnAttempts = 2;
+                    //    //alert("Sign In Failed");
+                    document.getElementById("alertId").innerHTML = "Sign in Failed";
+                        document.getElementById("password").value = "";
+
+                    //}
                 }
             }
         });
     }
 }
 
+function logOff() {
+    localStorage.clear();
+    window.open("../html/logIn.html", "_self");
+}
+
 //main.html
 //initalizes main.html for employee
 function loadMain() {
     showName();
+    GetTopics();
 }
 
 //profile.html
@@ -121,29 +138,34 @@ function addTopicToDatabase(topicTitle, category, location, comment) {
 //submission.html
 //displays employee information in header
 function showName() {
-    let storedParam = localStorage.getItem("employeeId");
+    if (localStorage.length === 0) {
+        window.open("../html/logIn.html", "_self");
+    }
+    else {
+        let storedParam = localStorage.getItem("employeeId");
 
-    let webMethod = "../BPP2.asmx/GetAccount";
-    let parameters = "{\"employeeId\":\"" + encodeURI(storedParam) + "\"}";
+        let webMethod = "../BPP2.asmx/GetAccount";
+        let parameters = "{\"employeeId\":\"" + encodeURI(storedParam) + "\"}";
 
-    $.ajax({
-        type: "POST",
-        url: webMethod,
-        data: parameters,
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (msg) {
-            if (msg.d.length > 0) {
-                accountArray = msg.d;
-                for (let i = 0; i < accountArray.length; i++) {
-                    if (accountArray[i].employeeId !== null) {
-                        document.getElementById("userNameId").innerHTML = accountArray[i].firstName + " " +
-                            accountArray[i].lastName;
+        $.ajax({
+            type: "POST",
+            url: webMethod,
+            data: parameters,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                if (msg.d.length > 0) {
+                    accountArray = msg.d;
+                    for (let i = 0; i < accountArray.length; i++) {
+                        if (accountArray[i].employeeId !== null) {
+                            document.getElementById("userNameId").innerHTML = accountArray[i].firstName + " " +
+                                accountArray[i].lastName;
+                        }
                     }
                 }
             }
-        }
-    });
+        });
+    }
 }
 
 
@@ -210,7 +232,7 @@ function loadAccountInfo() {
 //profile.html
 //updates the user info in the DB
 function editAccountInfo() {
-    var password
+    var password;
 
     password = document.getElementById("passwordId").value;
 
@@ -253,15 +275,15 @@ function showBadges() {
                 accountArray = msg.d;
                 for (let i = 0; i < accountArray.length; i++) {
                     if (accountArray[i].employeeId !== null) {
-                        if (accountArray[i].badge == 1)
+                        if (accountArray[i].badge === 1)
                             document.getElementById("badgeImg").src = "../images/1.png";
-                        else if (accountArray[i].badge == 2)
+                        else if (accountArray[i].badge === 2)
                             document.getElementById("badgeImg").src = "../images/2.png";
-                        else if (accountArray[i].badge == 3)
+                        else if (accountArray[i].badge === 3)
                             document.getElementById("badgeImg").src = "../images/3.png";
-                        else if (accountArray[i].badge == 4)
+                        else if (accountArray[i].badge === 4)
                             document.getElementById("badgeImg").src = "../images/4.png";
-                        else if (accountArray[i].badge == 5)
+                        else if (accountArray[i].badge === 5)
                             document.getElementById("badgeImg").src = "../images/5.png";
                     }
                     console.log(document.getElementById("badgeImg").src);
@@ -295,5 +317,11 @@ function GetTopics() {
                 }
             }
         }
-    })
+    });
+}
+
+//main.html
+//opens submission.html
+function newSuggestion() {
+    window.open("../html/submission.html", "_self");
 }
