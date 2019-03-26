@@ -287,7 +287,7 @@ function GetTopics() {
                     if (topicArray[i].Title !== null) {
                         var liNode = document.createElement('li');
                         var list = document.getElementById('topicsContainer')
-                        liNode.innerHTML = "Title: " + topicArray[i].Title + " " + "Relevance: " + topicArray[i].TopicRelevanceCounter;
+                        liNode.innerHTML = "Title: " + topicArray[i].Title + " " + "Relevance: " + topicArray[i].Relevance;
                         list.appendChild(liNode);
                     }
                 }
