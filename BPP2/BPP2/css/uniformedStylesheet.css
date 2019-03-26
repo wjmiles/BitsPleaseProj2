@@ -136,11 +136,19 @@ input {
     font-size: 14px;
 }
 
-    .footer p {
-        margin-top: 2px;
-    }
+.footer p {
+    margin-top: 2px;
+}
 
-    .footer a {
-        color: #73A7C1;
-        text-decoration: none;
-    }
+.footer a {
+    color: #73A7C1;
+    text-decoration: none;
+}
+
+.suggestionBox {
+    height: 300px;
+    width: 600px;
+    border: 1px solid #ccc;
+    font: 16px/26px Georgia, Garamond, Serif;
+    overflow: auto;
+}
