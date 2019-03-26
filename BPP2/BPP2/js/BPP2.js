@@ -274,6 +274,9 @@ function showBadges() {
 //main.html
 //displays topics in suggestion box
 function GetTopics() {
+    var list = document.getElementById('topicsContainer');
+    list.innerHTML = "";
+
     $.ajax({
         type: "POST",
         url: "../BPP2.asmx/GetTopics",
@@ -286,7 +289,6 @@ function GetTopics() {
                 for (let i = 0; i < topicArray.length; i++) {
                     if (topicArray[i].Title !== null) {
                         var liNode = document.createElement('li');
-                        var list = document.getElementById('topicsContainer')
                         liNode.innerHTML = "Title: " + topicArray[i].Title + " " + "Relevance: " + topicArray[i].Relevance;
                         list.appendChild(liNode);
                     }
