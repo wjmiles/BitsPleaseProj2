@@ -5,6 +5,8 @@
     <title>Suggestions</title>
     <link rel="icon" href="../images/logo.png">
     <link rel="stylesheet" type="text/css" href="../css/uniformedStylesheet.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="../js/BPP2.js" type="text/javascript"></script>
 </head>
 <body onload="loadMain()">
     <header class="header">
@@ -22,35 +24,42 @@
     <br>
     <br>
     <table>
-        <td>
-            Category: <select name="Category:" id="category">
-                <option>Cat1</option>
-                <option>Cat2</option>
-            </select>
-        </td>
-        <td>
-            Location: <select name="Location:" id="location">
-                <option>Location</option>
-                <option>San Antonio, TX</option>
-                <option>Austin, TX</option>
-                <option>Dallas, TX</option>
-                <option>Phoenix, AZ</option>
-                <option>Tampa, FL</option>
-                <option>Colorado Springs, CO</option>
-                <option>Chesapeake, VA</option>
-                <option>Annapolis, MD</option>
-                <option>New York, NY</option>
-                <option>Frankfurt, Germany</option>
-                <option>London, England</option>
-                <option>Home</option>
-            </select>
-        </td>
+        <tr>
+            <td>
+                Category: <select name="Category:" id="category">
+                    <option>Cat1</option>
+                    <option>Cat2</option>
+                </select>
+            </td>
+            <td>
+                Location: <select name="Location:" id="location">
+                    <option>Location</option>
+                    <option>San Antonio, TX</option>
+                    <option>Austin, TX</option>
+                    <option>Dallas, TX</option>
+                    <option>Phoenix, AZ</option>
+                    <option>Tampa, FL</option>
+                    <option>Colorado Springs, CO</option>
+                    <option>Chesapeake, VA</option>
+                    <option>Annapolis, MD</option>
+                    <option>New York, NY</option>
+                    <option>Frankfurt, Germany</option>
+                    <option>London, England</option>
+                    <option>Home</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button onclick="GetTopics()">Refresh List</button>
+            </td>
+        </tr>
     </table>
     <br>
     <br>
     <br>
-    <div class="suggestionBox">
-        <ul>
+    <div class="topicBox">
+        <ul id = "topicsContainer">
 
         </ul>
     </div>
@@ -68,9 +77,5 @@
             2019
         </p>
     </footer>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="../js/BPP2.js" type="text/javascript"></script>
-
 </body>
 </html>

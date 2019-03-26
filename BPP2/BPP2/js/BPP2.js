@@ -3,6 +3,7 @@
 
 //global variables
 var accountArray;
+var topicArray;
 var logOnAttempts = 0;
 
 //logIn.html
@@ -268,4 +269,29 @@ function showBadges() {
             }
         }
     });
+}
+
+//main.html
+//displays topics in suggestion box
+function GetTopics() {
+    $.ajax({
+        type: "POST",
+        url: "../BPP2.asmx/GetTopics",
+        //data: parameters,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+            if (msg.d.length > 0) {
+                topicArray = msg.d;
+                for (let i = 0; i < topicArray.length; i++) {
+                    if (topicArray[i].Title !== null) {
+                        var liNode = document.createElement('li');
+                        var list = document.getElementById('topicsContainer')
+                        liNode.innerHTML = "Title: " + topicArray[i].Title + " " + "Relevance: " + topicArray[i].TopicRelevanceCounter;
+                        list.appendChild(liNode);
+                    }
+                }
+            }
+        }
+    })
 }
