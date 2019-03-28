@@ -135,7 +135,7 @@ namespace BPP2
 
             string sqlConnectionSring = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
 
-            string sqlSelect = "INSERT INTO `topics` (`EmployeeID`, `TopicTitle`, `TopicCategory`, `TopicLocation`) VALUES (@employeeIdValue, @topicTitleValue, @categoryValue, @locationValue);";
+            string sqlSelect = "INSERT INTO `topic` (`EmployeeID`, `TopicTitle`, `TopicCategory`, `TopicLocation`) VALUES (@employeeIdValue, @topicTitleValue, @categoryValue, @locationValue);";
 
             MySqlConnection sqlConnection = new MySqlConnection(sqlConnectionSring);
             MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
@@ -205,7 +205,7 @@ namespace BPP2
         public Topic[] GetTopics()
         {
             string sqlConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
-            string sqlSelect = "SELECT TopicTitle, TopicRelevanceCounter FROM topics";
+            string sqlSelect = "SELECT TopicTitle, TopicRelevanceCounter FROM topic ORDER BY TopicRelevanceCounter DESC";
 
             MySqlConnection sqlConnection = new MySqlConnection(sqlConnectionString);
             MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
