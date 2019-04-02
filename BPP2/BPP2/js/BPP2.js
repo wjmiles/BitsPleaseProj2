@@ -56,7 +56,7 @@ function logOff() {
 //initalizes main.html for employee
 function loadMain() {
     showName();
-    GetTopics();
+    GetTopics(this);
 }
 
 //profile.html
@@ -318,31 +318,58 @@ function showBadges() {
 
 //main.html
 //displays topics in suggestion box
-function GetTopics() {
+function GetTopics(selectObject) {
+    var value = selectObject.value;
     var list = document.getElementById('topicsContainer');
     list.innerHTML = "";
 
-    $.ajax({
-        type: "POST",
-        url: "../BPP2.asmx/GetTopics",
-        //data: parameters,
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (msg) {
-            if (msg.d.length > 0) {
-                topicArray = msg.d;
-                for (let i = 0; i < topicArray.length; i++) {
-                    if (topicArray[i].Title !== null) {
-                        var liNode = document.createElement('li');
+    if (value === "least") {
+        $.ajax({
+            type: "POST",
+            url: "../BPP2.asmx/GetTopicsReverse",
+            //data: parameters,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                if (msg.d.length > 0) {
+                    topicArray = msg.d;
+                    for (let i = 0; i < topicArray.length; i++) {
+                        if (topicArray[i].Title !== null) {
+                            var liNode = document.createElement('li');
 
-                        liNode.innerHTML = "<button onclick='newSuggestion(" + topicArray[i].TopicID + ")'>Title</button>: " + topicArray[i].Title + " " + "Relevance: " + topicArray[i].Relevance;
+                            liNode.innerHTML = "<button onclick='newSuggestion(" + topicArray[i].TopicID + ")'>Title</button>: " + topicArray[i].Title + " " + "Relevance: " + topicArray[i].Relevance;
 
-                        list.appendChild(liNode);
+                            list.appendChild(liNode);
+                        }
                     }
                 }
             }
-        }
-    });
+        });
+    }
+
+    else {
+        $.ajax({
+            type: "POST",
+            url: "../BPP2.asmx/GetTopics",
+            //data: parameters,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                if (msg.d.length > 0) {
+                    topicArray = msg.d;
+                    for (let i = 0; i < topicArray.length; i++) {
+                        if (topicArray[i].Title !== null) {
+                            var liNode = document.createElement('li');
+
+                            liNode.innerHTML = "<button onclick='newSuggestion(" + topicArray[i].TopicID + ")'>Title</button>: " + topicArray[i].Title + " " + "Relevance: " + topicArray[i].Relevance;
+
+                            list.appendChild(liNode);
+                        }
+                    }
+                }
+            }
+        });
+    }
 }
 
 //main.html

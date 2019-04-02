@@ -49,7 +49,7 @@
                 </select>
             </td>
             <td>
-                Sort By: <select name="relevance" id="relevance">
+                Sort By: <select name="relevance" id="relevance" onchange="GetTopics(this)">
                     <option value="most">Most Relevant</option>
                     <option value="least">Least Relevant</option>
                 </select>
@@ -57,7 +57,7 @@
         </tr>
         <tr>
             <td>                
-                <button onclick="GetTopics()">Refresh List</button>
+                <button onclick="GetTopics(this)">Refresh List</button>
             </td>
         </tr>
     </table>
