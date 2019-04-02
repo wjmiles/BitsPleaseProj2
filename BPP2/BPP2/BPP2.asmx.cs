@@ -127,15 +127,13 @@ namespace BPP2
             sqlConnection.Close();
         }
 
-        //add topic
+        //add topic and comment
         [WebMethod(EnableSession = true)]
-        public Topic[] SubmitTopic(string employeeId, string topicTitle, string category, string location) //, string comment)
+        public void SubmitTopic(string employeeId, string topicTitle, string category, string location, string comment)
         {
-            DataTable sqlDt = new DataTable("topic");
-
             string sqlConnectionSring = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
 
-            string sqlSelect = "INSERT INTO `topic` (`EmployeeID`, `TopicTitle`, `TopicCategory`, `TopicLocation`) VALUES (@employeeIdValue, @topicTitleValue, @categoryValue, @locationValue);";
+            string sqlSelect = "INSERT INTO `topic` (`EmployeeID`, `TopicTitle`, `TopicCategory`, `TopicLocation`) VALUES (@employeeIdValue, @topicTitleValue, @categoryValue, @locationValue); SELECT @@IDENTITY;";
 
             MySqlConnection sqlConnection = new MySqlConnection(sqlConnectionSring);
             MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
@@ -144,36 +142,41 @@ namespace BPP2
             sqlCommand.Parameters.AddWithValue("@topicTitleValue", HttpUtility.UrlDecode(topicTitle));
             sqlCommand.Parameters.AddWithValue("@categoryValue", HttpUtility.UrlDecode(category));
             sqlCommand.Parameters.AddWithValue("@locationValue", HttpUtility.UrlDecode(location));
-            //sqlCommand.Parameters.AddWithValue("@commentValue", HttpUtility.UrlDecode(comment));
 
-            MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
-            sqlDa.Fill(sqlDt);
-
-            List<Topic> topic = new List<Topic>();
-            for (int i = 0; i < sqlDt.Rows.Count; i++)
+            sqlConnection.Open();
+            try
             {
-                topic.Add(new Topic
+                int topicID = Convert.ToInt32(sqlCommand.ExecuteScalar());
+
+                string sqlConnectionSring2 = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
+
+                string sqlSelect2 = "INSERT INTO `suggestions` (`TopicID`, `SuggestionContent`) VALUES(@topicIdValue, @commentValue);";
+
+                MySqlConnection sqlConnection2 = new MySqlConnection(sqlConnectionSring2);
+                MySqlCommand sqlCommand2 = new MySqlCommand(sqlSelect2, sqlConnection2);
+
+                sqlCommand2.Parameters.Add(new MySqlParameter("@topicIdValue", topicID));
+
+                sqlCommand2.Parameters.AddWithValue("@commentValue", HttpUtility.UrlDecode(comment));
+
+                sqlConnection2.Open();
+                try
                 {
-                    TopicID = Convert.ToInt32(sqlDt.Rows[i]["TopicID"]),
-                    EmployeeID = sqlDt.Rows[i]["EmployeeID"].ToString(),
-                    Title = sqlDt.Rows[i]["TopicTitle"].ToString(),
-                    Category = sqlDt.Rows[i]["TopicCategory"].ToString(),
-                    Location = sqlDt.Rows[i]["TopicLocation"].ToString(),
-                    Relevance = Convert.ToInt32(sqlDt.Rows[i]["TopicRelevenceCounter"])
-                });
+                    sqlCommand2.ExecuteNonQuery();
+
+                }
+                catch (Exception e)
+                {
+                }
+                sqlConnection2.Close();
+
+
+
             }
-
-            //sqlConnection.Open();
-            //try
-            //{
-            //    sqlCommand.ExecuteNonQuery();
-            //}
-            //catch (Exception e)
-            // {
-            //}
-            //sqlConnection.Close();
-
-            return topic.ToArray();
+            catch (Exception e)
+            {
+            }
+            sqlConnection.Close();
         }
 
         [WebMethod(EnableSession = true)]

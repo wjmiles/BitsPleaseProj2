@@ -85,10 +85,10 @@ function storeTopic() {
 
     addTopicToDatabase(topicTitle, category, location, comment);
 
-    //document.getElementById("topicTitle").value = "";
-    //document.getElementById("category").value = "";
-    //document.getElementById("location").value = "";
-    //document.getElementById("comment").value = "";
+    document.getElementById("topicTitle").value = "";
+    document.getElementById("category").value = "";
+    document.getElementById("location").value = "";
+    document.getElementById("comment").value = "";
 }
 
 //submission.html
@@ -101,8 +101,8 @@ function addTopicToDatabase(topicTitle, category, location, comment) {
     let parameters = "{\"employeeId\":\"" + encodeURI(storedParam) +
                      "\",\"topicTitle\":\"" + encodeURI(topicTitle) +
                      "\",\"category\":\"" + encodeURI(category) +
-                     "\",\"location\":\"" + encodeURI(location) + "\"}";
-                     //"\",\"comment\":\"" + encodeURI(comment) + 
+                     "\",\"location\":\"" + encodeURI(location) +
+                     "\",\"comment\":\"" + encodeURI(comment) + "\"}";
 
 
     $.ajax({
@@ -112,15 +112,7 @@ function addTopicToDatabase(topicTitle, category, location, comment) {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (msg) {
-            if (msg.d.length > 0) {
-                console.log(msg.d);
-                var funcRet = msg.d;
-                var topicId = funcRet[0].TopicID;
-                //localStorage.setItem("topicTitle", topicTitle[0].topicTitle);
-                addCommentToDB(topicId, comment);
-                console.log("Might of worked! :)");
-            }
-            //console.log(parameters);
+            console.log(parameters);
         },
         error: function (e) {
             alert("Probably didn't work :(");
