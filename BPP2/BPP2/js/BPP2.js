@@ -404,7 +404,7 @@ function populateSuggestions(topicID) {
                 topicArray = msg.d;
                 for (let i = 0; i < topicArray.length; i++) {
                     if (topicArray[i].Title !== null) {
-                        if (topicID === topicArray[i].TopicID) {
+                        if (topicID == topicArray[i].TopicID) {
                             var pageTopic = topicArray[i].Title;
                             document.getElementById('topicTitle').innerHTML = pageTopic;
                         }
