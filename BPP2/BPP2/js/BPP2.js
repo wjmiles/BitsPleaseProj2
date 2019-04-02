@@ -377,11 +377,36 @@ function GetTopics(selectObject) {
 function newSuggestion(topicID) {
     console.log('New Suggestion function triggered with: ' + topicID);
 
-    window.open("../html/suggestion.html");
+    window.open("../html/suggestion.html?" + topicID);
 }
 
 //main.html
 //opens submission.html
 function newTopic() {
     window.open("../html/submission.html", "_self");
+}
+
+//suggestion.html
+//populates fields with topic data
+function populateSuggestions(topicID) {
+    $.ajax({
+        type: "POST",
+        url: "../BPP2.asmx/GetTopics",
+        //data: parameters,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+            if (msg.d.length > 0) {
+                topicArray = msg.d;
+                for (let i = 0; i < topicArray.length; i++) {
+                    if (topicArray[i].Title !== null) {
+                        if (topicID == topicArray[i].TopicID) {
+                            var pageTopic = topicArray[i].Title;
+                            document.getElementById('topicTitle').innerHTML = pageTopic;
+                        }
+                    }
+                }
+            }
+        }
+    });
 }
