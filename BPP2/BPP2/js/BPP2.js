@@ -334,7 +334,9 @@ function GetTopics() {
                 for (let i = 0; i < topicArray.length; i++) {
                     if (topicArray[i].Title !== null) {
                         var liNode = document.createElement('li');
-                        liNode.innerHTML = "<a href=newSuggestion()>Title</a>: " + topicArray[i].Title + " " + "Relevance: " + topicArray[i].Relevance;
+
+                        liNode.innerHTML = "<button onclick='newSuggestion(" + topicArray[i].TopicID + ")'>Title</button>: " + topicArray[i].Title + " " + "Relevance: " + topicArray[i].Relevance;
+
                         list.appendChild(liNode);
                     }
                 }
@@ -345,7 +347,9 @@ function GetTopics() {
 
 //main.html
 //opens suggestion.html and passes it topic data
-function newSuggestion() {
+function newSuggestion(topicID) {
+    console.log('New Suggestion function triggered with: ' + topicID);
+
     window.open("../html/suggestion.html");
 }
 

@@ -152,3 +152,30 @@ input {
     font: 16px/26px Georgia, Garamond, Serif;
     overflow: auto;
 }
+
+div {
+    padding-left: 20px;
+}
+
+textarea {
+    width: 65%;
+    height: 300px;
+}
+
+#suggestion {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+#comment {
+    height: 350px;
+    color: #113A5B;
+    font-size: 18px;
+    background-repeat: no-repeat;
+    background-position: center;
+    box-sizing: border-box;
+    border-radius: 6px;
+    box-shadow: inset 0 0 1px #888;
+    border-bottom: 1px solid #F0F0F0;
+    width: 100%;
+}
