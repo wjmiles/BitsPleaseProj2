@@ -112,7 +112,7 @@ namespace BPP2
 
             MySqlConnection sqlConnection = new MySqlConnection(sqlConnectionString);
             MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
-            
+
             sqlCommand.Parameters.AddWithValue("@passwordValue", HttpUtility.UrlDecode(password));
             sqlCommand.Parameters.AddWithValue("@employeeIdValue", HttpUtility.UrlDecode(employeeId));
 
@@ -228,7 +228,7 @@ namespace BPP2
                     Category = sqlDt.Rows[i]["TopicCategory"].ToString(),
                     Location = sqlDt.Rows[i]["TopicCategory"].ToString(),
                     Relevance = Convert.ToInt32(sqlDt.Rows[i]["TopicRelevanceCounter"])
-    });
+                });
             }
             return topics.ToArray();
         }
@@ -263,4 +263,35 @@ namespace BPP2
             return topics.ToArray();
         }
     }
+
+ /* //get suggestions
+    [WebMethod(EnableSession = true)]
+    public Suggestion[] GetSuggestions()
+    {
+        string sqlConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
+        string sqlSelect = "SELECT * FROM suggestions ORDER BY SuggestionID";
+
+        MySqlConnection sqlConnection = new MySqlConnection(sqlConnectionString);
+        MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+        MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
+        DataTable sqlDt = new DataTable();
+
+        sqlDa.Fill(sqlDt);
+
+        List<Suggestion> suggestions = new List<Suggestion>();
+        for (int i = 0; i < sqlDt.Rows.Count; i++)
+        {
+            suggestions.Add(new Suggestion
+            {
+                SuggestionID = Convert.ToInt32(sqlDt.Rows[i])
+                TopicID = Convert.ToInt32(sqlDt.Rows[i]["TopicID"]),
+                 = sqlDt.Rows[i]["TopicTitle"].ToString(),
+                Category = sqlDt.Rows[i]["TopicCategory"].ToString(),
+                Location = sqlDt.Rows[i]["TopicCategory"].ToString(),
+                Relevance = Convert.ToInt32(sqlDt.Rows[i]["TopicRelevanceCounter"])
+            });
+        }
+        return topics.ToArray();
+    }*/
 }
