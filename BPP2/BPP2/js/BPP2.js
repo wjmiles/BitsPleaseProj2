@@ -334,7 +334,7 @@ function GetTopics() {
                 for (let i = 0; i < topicArray.length; i++) {
                     if (topicArray[i].Title !== null) {
                         var liNode = document.createElement('li');
-                        liNode.innerHTML = "Title: " + topicArray[i].Title + " " + "Relevance: " + topicArray[i].Relevance;
+                        liNode.innerHTML = "<a href=newSuggestion()>Title</a>: " + topicArray[i].Title + " " + "Relevance: " + topicArray[i].Relevance;
                         list.appendChild(liNode);
                     }
                 }
@@ -344,7 +344,13 @@ function GetTopics() {
 }
 
 //main.html
-//opens submission.html
+//opens suggestion.html and passes it topic data
 function newSuggestion() {
+    window.open("../html/suggestion.html");
+}
+
+//main.html
+//opens submission.html
+function newTopic() {
     window.open("../html/submission.html", "_self");
 }

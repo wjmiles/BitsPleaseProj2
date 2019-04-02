@@ -205,7 +205,7 @@ namespace BPP2
         public Topic[] GetTopics()
         {
             string sqlConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
-            string sqlSelect = "SELECT TopicTitle, TopicRelevanceCounter FROM topic ORDER BY TopicRelevanceCounter DESC";
+            string sqlSelect = "SELECT TopicID, TopicTitle, TopicRelevanceCounter FROM topic ORDER BY TopicRelevanceCounter DESC";
 
             MySqlConnection sqlConnection = new MySqlConnection(sqlConnectionString);
             MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
@@ -220,6 +220,7 @@ namespace BPP2
             {
                 topics.Add(new Topic
                 {
+                    TopicID = Convert.ToInt32(sqlDt.Rows[i]["TopicID"]),
                     Title = sqlDt.Rows[i]["TopicTitle"].ToString(),
                     Relevance = Convert.ToInt32(sqlDt.Rows[i]["TopicRelevanceCounter"])
                 });
