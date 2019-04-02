@@ -56,7 +56,7 @@ function logOff() {
 //initalizes main.html for employee
 function loadMain() {
     showName();
-    GetTopics(this);
+    loadSuggestions();
 }
 
 //profile.html
@@ -169,7 +169,6 @@ function showName() {
             dataType: "json",
             success: function (msg) {
                 if (msg.d.length > 0) {
-                    console.log(msg.d);
                     accountArray = msg.d;
                     for (let i = 0; i < accountArray.length; i++) {
                         if (accountArray[i].employeeId !== null) {
@@ -362,6 +361,12 @@ function GetTopics(selectObject) {
             }
         });
     }
+}
+
+//main.html
+//shows topics in suggestion box on page load
+function loadSuggestions() {
+    document.getElementById('refreshButtonId').click();
 }
 
 //main.html
