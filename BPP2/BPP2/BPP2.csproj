@@ -83,8 +83,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="BPP2.asmx" />
-    <Content Include="css\submissionStylesheet.css" />
-    <Content Include="css\suggestionStylesheet.css" />
+    <None Include="css\submissionStylesheet.old" />
+    <None Include="css\suggestionStylesheet.old" />
     <Content Include="css\uniformedStylesheet.css" />
     <Content Include="Global.asax" />
     <Content Include="html\logIn.html" />
