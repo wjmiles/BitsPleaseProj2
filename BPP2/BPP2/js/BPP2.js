@@ -373,6 +373,7 @@ function GetTopics(selectObject) {
 //shows topics in suggestion box on page load
 function loadSuggestions() {
     document.getElementById('refreshButtonId').click();
+    GetTopics(this);
 }
 
 //main.html
