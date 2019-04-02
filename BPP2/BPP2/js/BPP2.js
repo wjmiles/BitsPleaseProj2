@@ -83,12 +83,18 @@ function storeTopic() {
     location = document.getElementById("location").value;
     comment = document.getElementById("comment").value;
 
-    addTopicToDatabase(topicTitle, category, location, comment);
+    if (topicTitle === "" || comment === "" || location === "Location") {
+        console.log("Please fill in all information.")
+    }
+    else {
+        addTopicToDatabase(topicTitle, category, location, comment);
 
-    document.getElementById("topicTitle").value = "";
-    document.getElementById("category").value = "";
-    document.getElementById("location").value = "";
-    document.getElementById("comment").value = "";
+        document.getElementById("topicTitle").value = "";
+        document.getElementById("category").value = "default";
+        document.getElementById("location").value = "Location";
+        document.getElementById("comment").value = "";
+    }
+    
 }
 
 //submission.html
@@ -397,7 +403,7 @@ function populateSuggestions(topicID) {
                 topicArray = msg.d;
                 for (let i = 0; i < topicArray.length; i++) {
                     if (topicArray[i].Title !== null) {
-                        if (topicID == topicArray[i].TopicID) {
+                        if (topicID === topicArray[i].TopicID) {
                             var pageTopic = topicArray[i].Title;
                             document.getElementById('topicTitle').innerHTML = pageTopic;
                         }
