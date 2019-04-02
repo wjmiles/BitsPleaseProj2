@@ -335,7 +335,8 @@ function GetTopics() {
                     if (topicArray[i].Title !== null) {
                         var liNode = document.createElement('li');
 
-                        liNode.innerHTML = "<button onclick='newSuggestion(" + topicArray[i].TopicID + ")'>Title</button>: " + topicArray[i].Title + " " + "Relevance: " + topicArray[i].Relevance;
+                        liNode.innerHTML = "<button onclick='newSuggestion(" + topicArray[i].TopicID + ")'>" + topicArray[i].Title +
+                            "</button>: " + " " + "Relevance: " + topicArray[i].Relevance;
 
                         list.appendChild(liNode);
                     }

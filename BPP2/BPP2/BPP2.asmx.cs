@@ -200,12 +200,12 @@ namespace BPP2
             sqlConnection.Close();
         }
 
-        //get topics to populate topic list
+        //get topics
         [WebMethod(EnableSession = true)]
         public Topic[] GetTopics()
         {
             string sqlConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
-            string sqlSelect = "SELECT TopicID, TopicTitle, TopicRelevanceCounter FROM topic ORDER BY TopicRelevanceCounter DESC";
+            string sqlSelect = "SELECT * FROM topic ORDER BY TopicRelevanceCounter DESC";
 
             MySqlConnection sqlConnection = new MySqlConnection(sqlConnectionString);
             MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
@@ -222,8 +222,10 @@ namespace BPP2
                 {
                     TopicID = Convert.ToInt32(sqlDt.Rows[i]["TopicID"]),
                     Title = sqlDt.Rows[i]["TopicTitle"].ToString(),
+                    Category = sqlDt.Rows[i]["TopicCategory"].ToString(),
+                    Location = sqlDt.Rows[i]["TopicCategory"].ToString(),
                     Relevance = Convert.ToInt32(sqlDt.Rows[i]["TopicRelevanceCounter"])
-                });
+    });
             }
             return topics.ToArray();
         }
