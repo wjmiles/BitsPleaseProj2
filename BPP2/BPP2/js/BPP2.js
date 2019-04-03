@@ -371,6 +371,39 @@ function GetTopics(selectObject) {
 }
 
 //main.html
+//function to filter topics
+function FilterTopics(locationValue) {
+    var location, category
+    var list = document.getElementById('topicsContainer');
+    list.innerHTML = "";
+    location = locationValue.value;
+    // category = categoryValue.value;
+
+    $.ajax({
+        type: "POST",
+        url: "../BPP2.asmx/GetTopics",
+        //data: parameters,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+            if (msg.d.length > 0) {
+                topicArray = msg.d;
+                for (let i = 0; i < topicArray.length; i++) {
+                    if (topicArray[i].Title !== null) {                   
+                        var liNode = document.createElement('li');
+
+                        liNode.innerHTML = "<button onclick='newSuggestion(" + topicArray[i].TopicID + ")'>" + topicArray[i].Title + "</button>: " + " " + "Relevance: " + topicArray[i].Relevance;
+                        if (location == topicArray[i].Location) {
+                                list.appendChild(liNode);
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+
+//main.html
 //shows topics in suggestion box on page load
 function loadSuggestions() {
     document.getElementById('refreshButtonId').click();

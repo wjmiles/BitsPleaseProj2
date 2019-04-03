@@ -226,7 +226,7 @@ namespace BPP2
                     TopicID = Convert.ToInt32(sqlDt.Rows[i]["TopicID"]),
                     Title = sqlDt.Rows[i]["TopicTitle"].ToString(),
                     Category = sqlDt.Rows[i]["TopicCategory"].ToString(),
-                    Location = sqlDt.Rows[i]["TopicCategory"].ToString(),
+                    Location = sqlDt.Rows[i]["TopicLocation"].ToString(),
                     Relevance = Convert.ToInt32(sqlDt.Rows[i]["TopicRelevanceCounter"])
                 });
             }
