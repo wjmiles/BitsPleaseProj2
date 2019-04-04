@@ -383,7 +383,7 @@ function FilterTopics(locationValue) {
     var list = document.getElementById('topicsContainer');
     list.innerHTML = "";
     location = locationValue.value;
-    // category = categoryValue.value;
+    category = categoryValue.value;
 
     $.ajax({
         type: "POST",
@@ -401,8 +401,8 @@ function FilterTopics(locationValue) {
                         liNode.innerHTML = "<button onclick='newSuggestion(" + topicArray[i].TopicID + ")'>" + topicArray[i].Title + "</button>: " + " "
                                          + "Relevance: " + topicArray[i].Relevance + " "
                                          + "<button onclick='relevanceUp(" + topicArray[i].TopicID + ")'>" + "<img src='../images/2.png' alt='Thumbs Up' height='17'>" + "</button>" 
-                                         + "<button onclick='relevanceDown(" + topicArray[i].TopicID + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>"; 
-                        if (location === topicArray[i].Location) {
+                            + "<button onclick='relevanceDown(" + topicArray[i].TopicID + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>";
+                        if (location === topicArray[i].Location || category === topicArray[i].Category) {
                                 list.appendChild(liNode);
                         }
                     }
