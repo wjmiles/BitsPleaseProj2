@@ -378,7 +378,7 @@ function GetTopics(selectObject) {
 
 //main.html
 //function to filter topics
-function FilterTopics(locationValue) {
+function FilterTopics(locationValue, categoryValue) {
     var location, category;
     var list = document.getElementById('topicsContainer');
     list.innerHTML = "";
