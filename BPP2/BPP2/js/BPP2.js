@@ -85,7 +85,7 @@ function storeTopic() {
     comment = document.getElementById("comment").value;
 
     if (topicTitle === "" || comment === "" || location === "Location") {
-        console.log("Please fill in all information.")
+        console.log("Please fill in all information.");
     }
     else {
         addTopicToDatabase(topicTitle, category, location, comment);
@@ -335,7 +335,10 @@ function GetTopics(selectObject) {
                         if (topicArray[i].Title !== null) {
                             var liNode = document.createElement('li');
 
-                            liNode.innerHTML = "<button onclick='newSuggestion(" + topicArray[i].TopicID + ")'>" + topicArray[i].Title + "</button>: " + " " + "Relevance: " + topicArray[i].Relevance;
+                            liNode.innerHTML = "<button onclick='newSuggestion(" + topicArray[i].TopicID + ")'>" + topicArray[i].Title + "</button>: " + " "
+                                             + "Relevance: " + topicArray[i].Relevance + " "
+                                             + "<button onclick='relevanceUp(" + topicArray[i].TopicID + ")'>" + "<img src='../images/2.png' alt='Thumbs Up' height='17'>" + "</button>" 
+                                             + "<button onclick='relevanceDown(" + topicArray[i].TopicID + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>"; 
 
                             list.appendChild(liNode);
                         }
@@ -359,7 +362,10 @@ function GetTopics(selectObject) {
                         if (topicArray[i].Title !== null) {
                             var liNode = document.createElement('li');
 
-                            liNode.innerHTML = "<button onclick='newSuggestion(" + topicArray[i].TopicID + ")'>" + topicArray[i].Title + "</button>: " + " " + "Relevance: " + topicArray[i].Relevance;
+                            liNode.innerHTML = "<button onclick='newSuggestion(" + topicArray[i].TopicID + ")'>" + topicArray[i].Title + "</button>: " + " "
+                                             + "Relevance: " + topicArray[i].Relevance + " "
+                                             + "<button onclick='relevanceUp(" + topicArray[i].TopicID + ")'>" + "<img src='../images/2.png' alt='Thumbs Up' height='17'>" + "</button>" 
+                                             + "<button onclick='relevanceDown(" + topicArray[i].TopicID + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>"; 
 
                             list.appendChild(liNode);
                         }
@@ -373,7 +379,7 @@ function GetTopics(selectObject) {
 //main.html
 //function to filter topics
 function FilterTopics(locationValue) {
-    var location, category
+    var location, category;
     var list = document.getElementById('topicsContainer');
     list.innerHTML = "";
     location = locationValue.value;
@@ -392,8 +398,11 @@ function FilterTopics(locationValue) {
                     if (topicArray[i].Title !== null) {                   
                         var liNode = document.createElement('li');
 
-                        liNode.innerHTML = "<button onclick='newSuggestion(" + topicArray[i].TopicID + ")'>" + topicArray[i].Title + "</button>: " + " " + "Relevance: " + topicArray[i].Relevance;
-                        if (location == topicArray[i].Location) {
+                        liNode.innerHTML = "<button onclick='newSuggestion(" + topicArray[i].TopicID + ")'>" + topicArray[i].Title + "</button>: " + " "
+                                         + "Relevance: " + topicArray[i].Relevance + " "
+                                         + "<button onclick='relevanceUp(" + topicArray[i].TopicID + ")'>" + "<img src='../images/2.png' alt='Thumbs Up' height='17'>" + "</button>" 
+                                         + "<button onclick='relevanceDown(" + topicArray[i].TopicID + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>"; 
+                        if (location === topicArray[i].Location) {
                                 list.appendChild(liNode);
                         }
                     }
@@ -438,7 +447,7 @@ function populateSuggestions(topicID) {
                 topicArray = msg.d;
                 for (let i = 0; i < topicArray.length; i++) {
                     if (suggestionArray[i].SuggestionID !== null) {
-                        if (topicID == suggestionArray[i].TopicID) {
+                        if (topicID === suggestionArray[i].TopicID) {
                             var pageSuggestion = suggestionArray[i].SuggestionContent;
                             document.getElementById('viewComments').innerHTML = pageSuggestion;
                         }
@@ -446,7 +455,7 @@ function populateSuggestions(topicID) {
                 }
             }
         }
-    })
+    });
     $.ajax({
         type: "POST",
         url: "../BPP2.asmx/GetSuggestions",
@@ -458,7 +467,7 @@ function populateSuggestions(topicID) {
                 suggestionArray = msg.d;
                 for (let i = 0; i < suggestionArray.length; i++) {
                     if (suggestionArray[i].Title !== null) {
-                        if (topicID == topicArray[i].TopicID) {
+                        if (topicID === topicArray[i].TopicID) {
                             var pageTopic = topicArray[i].Title;
                             document.getElementById('topicTitle').innerHTML = pageTopic;
                         }
@@ -467,4 +476,16 @@ function populateSuggestions(topicID) {
             }
         }
     });
+}
+
+//main.html
+//relevance +1
+function relevanceUp(topicId) {
+    console.log(topicId + "Up");
+}
+
+//main.html
+//relevance -1
+function relevanceDown(topicId) {
+    console.log(topicId + "Down");
 }
