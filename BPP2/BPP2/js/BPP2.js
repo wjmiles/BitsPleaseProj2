@@ -378,12 +378,12 @@ function GetTopics(selectObject) {
 
 //main.html
 //function to filter topics
-function FilterTopics(locationValue, categoryValue) {
+function FilterTopics(locationValue) {
     var location, category;
     var list = document.getElementById('topicsContainer');
     list.innerHTML = "";
     location = locationValue.value;
-    category = categoryValue.value;
+    // category = categoryValue.value;
 
     $.ajax({
         type: "POST",
@@ -402,7 +402,7 @@ function FilterTopics(locationValue, categoryValue) {
                                          + "Relevance: " + topicArray[i].Relevance + " "
                                          + "<button onclick='relevanceUp(" + topicArray[i].TopicID + ")'>" + "<img src='../images/2.png' alt='Thumbs Up' height='17'>" + "</button>" 
                             + "<button onclick='relevanceDown(" + topicArray[i].TopicID + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>";
-                        if (location === topicArray[i].Location || category === topicArray[i].Category) {
+                        if (location === topicArray[i].Location) {
                                 list.appendChild(liNode);
                         }
                     }
