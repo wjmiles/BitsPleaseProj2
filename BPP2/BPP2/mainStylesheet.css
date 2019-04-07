@@ -1,0 +1,16 @@
+table { padding-left: 20px; }
+
+td { padding-top: 15px; }
+
+.topicBox {
+    height: 300px;
+    width: 600px;
+    margin-left: 20px;
+    border: 1px solid #ccc;
+    font: 16px/26px Georgia, Garamond, Serif;
+    overflow: auto;
+}
+
+.formButton { 
+	margin-left: 20px;
+}
