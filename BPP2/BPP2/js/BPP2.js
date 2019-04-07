@@ -438,16 +438,16 @@ function newTopic() {
 function populateSuggestions(topicID) {
     $.ajax({
         type: "POST",
-        url: "../BPP2.asmx/GetTopics",
+        url: "../BPP2.asmx/GetSuggestions",
         //data: parameters,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (msg) {
             if (msg.d.length > 0) {
-                topicArray = msg.d;
-                for (let i = 0; i < topicArray.length; i++) {
+                suggestionArray = msg.d;
+                for (let i = 0; i < suggestionArray.length; i++) {
                     if (suggestionArray[i].SuggestionID !== null) {
-                        if (topicID === suggestionArray[i].TopicID) {
+                        if (topicID == suggestionArray[i].TopicID) {
                             var pageSuggestion = suggestionArray[i].SuggestionContent;
                             document.getElementById('viewComments').innerHTML = pageSuggestion;
                         }
@@ -458,16 +458,16 @@ function populateSuggestions(topicID) {
     });
     $.ajax({
         type: "POST",
-        url: "../BPP2.asmx/GetSuggestions",
+        url: "../BPP2.asmx/GetTopics",
         //data: parameters,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (msg) {
             if (msg.d.length > 0) {
-                suggestionArray = msg.d;
-                for (let i = 0; i < suggestionArray.length; i++) {
-                    if (suggestionArray[i].Title !== null) {
-                        if (topicID === topicArray[i].TopicID) {
+                topicArray = msg.d;
+                for (let i = 0; i < topicArray.length; i++) {
+                    if (topicArray[i].Title !== null) {
+                        if (topicID == topicArray[i].TopicID) {
                             var pageTopic = topicArray[i].Title;
                             document.getElementById('topicTitle').innerHTML = pageTopic;
                         }
