@@ -6,3 +6,7 @@ textarea {
     width: 65%;
     height: 300px;
 }
+
+.formButton {
+	margin-left: 20px;
+}

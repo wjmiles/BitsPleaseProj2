@@ -5,10 +5,11 @@
 	<title>Employee Profile</title>
 	<link rel="icon" href="../images/logo.png" >
 	<link rel="stylesheet" type="text/css" href="../css/uniformedStylesheet.css">
+    <link rel="stylesheet" type="text/css" href="../css/profileStylesheet.css">
 </head>
 <body onload="loadProfile()">
     <header class="header">
-        <a id="headerHomeAnchor" href="./main.html"><img src="../images/logo.png" id="headerImg" alt="logo"></img></a>
+        <a id="headerHomeAnchor" href="./main.html"><img src="../images/logo.png" id="headerImg" alt="logo"></a>
         <h1>Employee Profile</h1>
         <div id="userInfo">
             <p>
@@ -21,40 +22,35 @@
     <div class="content">
         <table>
             <tr>
-                <!-- <td><input id="employeeId" type="text" placeholder="Eagle ID" readonly required></td> -->
                 <td>Employee ID: </td>
                 <td><span id="employeeId"></span></td>
             </tr>
+
             <tr>
-                <td><input id="passwordId" type="password" placeholder="Password" required></td>
-            </tr>
-            <tr>
-                <!-- <td><input id="firstNameId" type="text" placeholder="First Name" readonly required></td> -->
                 <td>First Name: </td>
                 <td><span id="firstNameId"></span></td>
             </tr>
             <tr>
-                <!--<td><input id="lastNameId" type="text" placeholder="Last Name" readonly required></td>-->
                 <td>Last Name: </td>
                 <td><span id="lastNameId"></span></td>
             </tr>
             <tr>
-                <!--<td><input id="positionId" type="text" placeholder="Position" readonly required></td>-->
                 <td>Position: </td>
                 <td><span id="positionId"></span></td>
             </tr>
             <tr>
-                <!--<td><input id="departmentId" type="text" placeholder="Department" readonly required></td>-->
                 <td>Department: </td>
                 <td><span id="departmentId"></span></td>
             </tr>
             <tr>
-                <!--<td><input id="locationId" type="text" placeholder="Location" readonly required></td>-->
                 <td>Location: </td>
                 <td><span id="locationId"></span></td>
             </tr>
             <tr>
-                <td><span id="badgeId"><img src="" alt="badgeImage" id="badgeImg" style="width: 51.2px; height: 51.2px;"></span></td>
+                <td><span id="badgeId"><img src="" alt="badgeImage" id="badgeImg"></span></td>
+            </tr>
+            <tr>
+                <td><input id="passwordId" type="password" placeholder="Password" required></td>
             </tr>
             <tr>
                 <td><input type="button" value="Update" onclick="editAccountInfo()" class="formButton"></td>

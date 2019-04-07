@@ -5,102 +5,12 @@
 	<title>Comment Submission</title>
 	<link rel="icon" href="../images/logo.png">
 	<link rel="stylesheet" type="text/css" href="../css/uniformedStylesheet.css">
-	<!-- <link rel="stylesheet" type="text/css" href="../css/submissionStylesheet.css"> -->
-
-	<!-- <style type="text/css">
-		html {
-			background: linear-gradient(to bottom,#EEEEEE,#E0E0E0);
-		}
-
-		button {
-			   color: #F0F0F0;
-			   text-shadow: 0 -1px rgba(0,0,0,.3);
-			   border: none;
-			   box-shadow: inset 0 1px 1px rgba(255,255,255,.2), 0 1px 1px rgba(0,0,0,.3);
-			   height: 55px;
-			   width: 70%;
-			   font-family: GothamBook;
-			   font-size: 30px;
-			   border-radius: 6px;
-			   background: linear-gradient(to bottom,#3F7190,#00375C);
-			   font-weight: 700;
-			   0margin-top: 25px;
-			   margin-left: auto;
-			   margin-right: auto;
-		}
-
-		header {
-		   height: 55px;
-		   max-height: 55px;
-		   width: 100%;
-		   border-bottom: 4px solid #407891;
-		   background-color: #003B53;
-		   z-index: 10;
-		}
-
-		h1 {
-			   font-size: 22px;
-			   color: #F0F0F0;
-			   text-shadow: 0 -1px rgba(0,0,0,0.5);
-			   padding: 14px 0 0 10px;
-			   float: left;
-			   font-family: GothamBook;
-		}
-
-		input {
-			   margin-top: 10px;
-			   height: 55px;
-			   padding-left: 70px;
-			   color: #113A5B;
-			   font-family: GothamBook;
-			   font-size: 28px;
-			   background-repeat: no-repeat;
-			   background-position: 10px center;
-			   box-sizing: border-box;
-			   border-radius: 6px;
-			   box-shadow: inset 0 0 1px #888;
-			   border-bottom: 1px solid #F0F0F0;
-			   width: 100%;
-		}
-
-		#comment {
-			   height: 350px;
-			   color: #113A5B;
-			   font-family: GothamBook;
-			   font-size: 18px;
-			   background-repeat: no-repeat;
-			   background-position: center;
-			   box-sizing: border-box;
-			   border-radius: 6px;
-			   box-shadow: inset 0 0 1px #888;
-			   border-bottom: 1px solid #F0F0F0;
-			   width: 100%;
-		}
-
-		#headerImg {
-			margin-left: 20px;
-			border: 3px solid #407891;
-			border-radius: 5px;
-			background-color: #003B53
-		}
-
-		footer {
-		   height: 55px;
-		   max-height: 55px;
-		   width: 100%;
-		   border-top: 4px solid #407891;
-		   background-color: #003B53;
-		   z-index: 10;
-		   color: white;
-		   position: fixed;
-		   bottom: 0;
-		}
-	</style>  -->
+	<link rel="stylesheet" type="text/css" href="../css/submissionStylesheet.css">
 </head>
 
 <body onload="loadSubmission()">
     <header class="header">
-        <a id="headerHomeAnchor" href="./main.html"><img src="../images/logo.png" id="headerImg" alt="logo"></img></a>
+        <a id="headerHomeAnchor" href="./main.html"><img src="../images/logo.png" id="headerImg" alt="logo"></a>
         <h1>Topic Submission</h1>
         <div id="userInfo">
             <p>
@@ -140,11 +50,11 @@
             <option value="London, England">London, England</option>
             <option value="Home">Home</option>
         </select>
-        <br><br>
-        Topic
+        <br>
+        <p>Topic<p>
         <input type="text" name="topic" id="topicTitle" maxlength="180" placeholder="A breif description of the topic" required autofocus>
-        <br><br>
-        Comment
+        <br>
+        <p>Comment</p>
         <textarea name="comment" id="comment" placeholder="An actionable solution for the topic" required></textarea>
         <br><br>
         <button type="button" id="submitTopicButtonId" class="formButton" value="Submit" onclick="storeTopic()">Submit</button>
