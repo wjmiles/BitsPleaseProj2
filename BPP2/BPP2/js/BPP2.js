@@ -132,11 +132,20 @@ function addTopicToDatabase(topicTitle, category, location, comment) {
 
 //submission.html
 //adds comment to the db
-function addCommentToDB(topicId, comment) {
-    alert(topicId);
-    alert(comment);
+function addCommentToDB(topicId) {
 
-    let webMethod = "../BPP2/SubmitComment";
+    if (document.getElementById("commentTextArea").value !== "") {
+        var comment = document.getElementById("commentTextArea").value;
+    }
+    else {
+        alert("Enter a comment");
+        return;
+    }
+
+    console.log(topicId);
+    console.log(comment);
+
+    let webMethod = "../BPP2.asmx/SubmitComment";
     let parameters = "{\"topicId\":\"" + encodeURI(topicId) +
                      "\",\"comment\":\"" + encodeURI(comment) + "\"}";
 
@@ -490,19 +499,4 @@ function relevanceUp(topicId) {
 //relevance -1
 function relevanceDown(topicId) {
     console.log(topicId + "Down");
-}
-
-//suggestion.html
-//add new comment to database linked to topicID
-function submitComment(topicId){
-    var comment;
-
-    if (document.getElementById("commentTextArea").value !== "") {
-        comment = document.getElementById("commentTextArea").value;
-        console.log(comment);
-        console.log(topicId);
-    }
-    else {
-        alert("Enter a comment");
-    }
 }
