@@ -435,22 +435,6 @@ function newTopic() {
     window.open("../html/submission.html", "_self");
 }
 
-//main.html
-//timed refresh of topcis list (1000ms = 1sec)
-function pollFunc(fn, timeout, interval) {
-    console.log("refreshing topics");
-
-    var startTime = (new Date()).getTime();
-    interval = interval || 1000;
-
-    (function p() {
-        fn();
-        if (((new Date).getTime() - startTime) <= timeout) {
-            setTimeout(p, interval);
-        }
-    })();
-}
-
 //suggestion.html
 //populates fields with topic data
 function populateSuggestions(topicID) {
@@ -506,4 +490,19 @@ function relevanceUp(topicId) {
 //relevance -1
 function relevanceDown(topicId) {
     console.log(topicId + "Down");
+}
+
+//suggestion.html
+//add new comment to database linked to topicID
+function submitComment(topicId){
+    var comment;
+
+    if (document.getElementById("commentTextArea").value !== "") {
+        comment = document.getElementById("commentTextArea").value;
+        console.log(comment);
+        console.log(topicId);
+    }
+    else {
+        alert("Enter a comment");
+    }
 }
