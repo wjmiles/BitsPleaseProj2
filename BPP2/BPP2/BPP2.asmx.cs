@@ -101,9 +101,9 @@ namespace BPP2
         }
 
 
-        //edit user
+        //update password
         [WebMethod(EnableSession = true)]
-        public void EditUser(string employeeId, string password)
+        public void UpdatePassword(string employeeId, string password)
         {
             string sqlConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
             //"UPDATE users SET ScreenName=@screenNameValue, Email=@emailValue, FirstName=@firstNameValue, LastName=@lastNameValue, " +

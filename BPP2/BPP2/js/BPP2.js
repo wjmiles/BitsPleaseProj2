@@ -76,6 +76,13 @@ function loadSubmission() {
     showName();
 }
 
+// suggestion.html
+// initializes suugestion.html for employee
+function loadSuggestionPage(topicID) {
+    populateSuggestions(topicID);
+    showName();
+}
+
 //submission.html
 //stores topic 
 function storeTopic() {
@@ -269,7 +276,7 @@ function editAccountInfo() {
     password = document.getElementById("passwordId").value;
 
     var storedParam = localStorage.getItem("employeeId");
-    var webMethod = "../BPP2.asmx/EditUser";
+    var webMethod = "../BPP2.asmx/UpdatePassword";
     var parameters = "{\"employeeId\":\"" + encodeURI(storedParam) +
         "\",\"password\":\"" + encodeURI(password) + "\" }";
     console.log(parameters);
