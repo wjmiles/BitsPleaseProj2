@@ -157,10 +157,10 @@ function addCommentToDB(topicId) {
         dataType: "json",
         success: function (msg) {
             console.log("Might of worked");
-            window.open("../html/main.html", "_self");
+            location.reload();
         },
         error: function (e) {
-            console.log("Probaably Not!");
+            console.log("Probably Not!");
         }
     });
 }
@@ -447,6 +447,9 @@ function newTopic() {
 //suggestion.html
 //populates fields with topic data
 function populateSuggestions(topicID) {
+    var list = document.getElementById("viewComments");
+    list.innerHTML = "";
+
     $.ajax({
         type: "POST",
         url: "../BPP2.asmx/GetSuggestions",
@@ -460,7 +463,11 @@ function populateSuggestions(topicID) {
                     if (suggestionArray[i].SuggestionID !== null) {
                         if (topicID == suggestionArray[i].TopicID) {
                             var pageSuggestion = suggestionArray[i].SuggestionContent;
-                            document.getElementById('viewComments').innerHTML = pageSuggestion;
+                            var liNode = document.createElement('li');
+                            
+                            liNode.innerHTML = pageSuggestion;
+
+                            list.appendChild(liNode);
                         }
                     }
                 }
