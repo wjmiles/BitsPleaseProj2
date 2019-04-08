@@ -56,6 +56,8 @@ function logOff() {
 //main.html
 //initalizes main.html for employee
 function loadMain() {
+    //console.log('set interval for pulling suggestions');
+    //window.setInterval(loadSuggestions, 5000);
     showName();
     loadSuggestions();
 }
@@ -431,6 +433,22 @@ function newSuggestion(topicID) {
 //opens submission.html
 function newTopic() {
     window.open("../html/submission.html", "_self");
+}
+
+//main.html
+//timed refresh of topcis list (1000ms = 1sec)
+function pollFunc(fn, timeout, interval) {
+    console.log("refreshing topics");
+
+    var startTime = (new Date()).getTime();
+    interval = interval || 1000;
+
+    (function p() {
+        fn();
+        if (((new Date).getTime() - startTime) <= timeout) {
+            setTimeout(p, interval);
+        }
+    })();
 }
 
 //suggestion.html
