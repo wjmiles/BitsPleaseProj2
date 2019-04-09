@@ -292,5 +292,35 @@ namespace BPP2
             return suggestions.ToArray();
         }
 
+        //change relevance of topic
+        [WebMethod(EnableSession = true)]
+        public string updateRelevance(string newRelevance, string topicId)
+        {
+            string ret = "9";
+            string sqlConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
+            string sqlSelect = "UPDATE topic SET TopicRelevanceCounter=@newRelevanceValue WHERE TopicID=@topicIdValue";
+
+            MySqlConnection sqlConnection = new MySqlConnection(sqlConnectionString);
+            MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+            sqlCommand.Parameters.AddWithValue("@newRelevanceValue", HttpUtility.UrlDecode(newRelevance));
+            sqlCommand.Parameters.AddWithValue("@topicIdValue", HttpUtility.UrlDecode(topicId));
+
+            sqlConnection.Open();
+            try
+            {
+                //ret = topicId;
+                ret = "good";
+                sqlCommand.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                ret = "bad";
+                //ret = topicId+10000;
+            }
+            sqlConnection.Close();
+            return ret;
+        }
+
     }
 }
