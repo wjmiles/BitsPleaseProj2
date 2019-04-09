@@ -432,6 +432,10 @@ function FilterTopics(locationValue) {
 //main.html
 //function to filter topic by category
 function FilterTopicsCategory(categoryValue) {
+    if (categoryValue.value == 'Category') {
+        document.getElementById('refreshButtonId').click();
+    } 
+
     var category;
     var list = document.getElementById('topicsContainer');
     list.innerHTML = "";
