@@ -397,11 +397,10 @@ function GetTopics(selectObject) {
 //main.html
 //function to filter topics
 function FilterTopics(locationValue) {
-    var location, category;
+    var location;
     var list = document.getElementById('topicsContainer');
     list.innerHTML = "";
     location = locationValue.value;
-    // category = categoryValue.value;
 
     $.ajax({
         type: "POST",
@@ -422,6 +421,41 @@ function FilterTopics(locationValue) {
                             + "<button onclick='relevanceDown(" + topicArray[i].TopicID + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>";
                         if (location === topicArray[i].Location) {
                                 list.appendChild(liNode);
+                        }
+                    }
+                }
+            }
+        }
+    });
+}
+
+//main.html
+//function to filter topic by category
+function FilterTopicsCategory(categoryValue) {
+    var category;
+    var list = document.getElementById('topicsContainer');
+    list.innerHTML = "";
+    category = categoryValue.value;
+
+    $.ajax({
+        type: "POST",
+        url: "../BPP2.asmx/GetTopics",
+        //data: parameters,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+            if (msg.d.length > 0) {
+                topicArray = msg.d;
+                for (let i = 0; i < topicArray.length; i++) {
+                    if (topicArray[i].Title !== null) {
+                        var liNode = document.createElement('li');
+
+                        liNode.innerHTML = "<button onclick='newSuggestion(" + topicArray[i].TopicID + ")'>" + topicArray[i].Title + "</button>: " + " "
+                            + "Relevance: " + topicArray[i].Relevance + " "
+                            + "<button onclick='relevanceUp(" + topicArray[i].TopicID + ")'>" + "<img src='../images/2.png' alt='Thumbs Up' height='17'>" + "</button>"
+                            + "<button onclick='relevanceDown(" + topicArray[i].TopicID + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>";
+                        if (category === topicArray[i].Category) {
+                            list.appendChild(liNode);
                         }
                     }
                 }
