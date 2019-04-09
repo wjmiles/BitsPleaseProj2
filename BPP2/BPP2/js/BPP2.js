@@ -508,9 +508,13 @@ function populateSuggestions(topicID) {
                     if (suggestionArray[i].SuggestionID !== null) {
                         if (topicID == suggestionArray[i].TopicID) {
                             var pageSuggestion = suggestionArray[i].SuggestionContent;
+                            var pageSuggestionAgreement = suggestionArray[i].SuggestionAgreementCounter;
                             var liNode = document.createElement('li');
                             
-                            liNode.innerHTML = pageSuggestion;
+                            liNode.innerHTML = pageSuggestion + "&nbsp;&nbsp;"
+                                             + "<button onclick='agree(" + suggestionArray[i].SuggestionID + ", " + suggestionArray[i].SuggestionAgreementCounter + ", " + 1 + ")'>" + "<img src='../images/2.png' alt='Thumbs Up' height='17'>" + "</button>"
+                                             + "<button onclick='agree(" + suggestionArray[i].SuggestionID + ", " + suggestionArray[i].SuggestionAgreementCounter + ", " + -1 + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>"
+                                             + "&nbsp;" + pageSuggestionAgreement;
 
                             list.appendChild(liNode);
                         }
@@ -544,9 +548,9 @@ function populateSuggestions(topicID) {
 //main.html
 //relevance change
 function relevance(topicId, relevance, change) {
-    console.log(topicId + " " + relevance + " " + change);
+    //console.log(topicId + " " + relevance + " " + change);
     let newRelevance = relevance + change;
-    console.log(newRelevance);
+    //console.log(newRelevance);
 
     let webMethod = "../BPP2.asmx/updateRelevance";
     let parameters = "{\"topicId\":\"" + encodeURI(topicId) +
@@ -559,8 +563,32 @@ function relevance(topicId, relevance, change) {
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (msg) {
-            console.log("yay");
+            //console.log("yay");
             loadSuggestions();
+        }
+    });
+}
+
+//suggestion.html
+//agree change
+function agree(suggestionId, agree, change) {
+    console.log(suggestionId + " " + agree + " " + change);
+
+    let newAgree = agree + change;
+
+    let webMethod = "../BPP2.asmx/updateAgree";
+    let parameters = "{\"suggestionId\":\"" + encodeURI(suggestionId) +
+        "\",\"newAgree\":\"" + encodeURI(newAgree) + "\" }";
+
+    $.ajax({
+        type: "POST",
+        url: webMethod,
+        data: parameters,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+            console.log("yay");
+            location.reload();
         }
     });
 }
