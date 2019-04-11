@@ -81,6 +81,7 @@ function loadSubmission() {
 function loadSuggestionPage(topicID) {
     populateSuggestions(topicID);
     showName();
+    getBadge(topicID);
 }
 
 //submission.html
@@ -294,6 +295,81 @@ function editAccountInfo() {
         }
     });
 }
+
+// suggestion.html
+// determin the user can get which badge
+function getBadge(topicID) {
+
+    var storedParam = localStorage.getItem("employeeId");
+    var badgeId = localStorage.getItem("badge");
+    var webMethod = "../BPP2.asmx/GetAccount";
+    var parameters = "{\"employeeId\":\"" + encodeURI(storedParam)
+        + "\", \"badge\":\"" + encodeURI(badgeId) + "\"}";
+
+
+    var relevanceCount;
+    $.ajax({
+        type: "POST",
+        url: "../BPP2.asmx/GetTopics",
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+            if (msg.d.length > 0) {
+                topicArray = msg.d;
+                for (let i = 0; i < topicArray.length; i++) {
+                    if (topicArray[i].Title !== null) {
+                        if (topicID == topicArray[i].TopicID) {
+                            relevanceCount = topicArray[i].Relevance;
+                            //console.log(topicArray[i].Relevance);
+                            //console.log(relevanceCount);
+                        }
+                    }
+                }// get relevanceCounter
+                console.log("relevantCount: " + relevanceCount);
+
+                // get original badgeId
+                $.ajax({
+                    type: "POST",
+                    url: webMethod,
+                    data: parameters,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (msg) {
+                        if (msg.d.length > 0) {
+                            accountArray = msg.d;
+                            for (var i = 0; i < accountArray.length; i++) {
+                                badgeId = accountArray[i].badge;
+                                console.log("original badge: " + accountArray[i].badge);
+                                //console.log(badgeId);
+                            }
+                        }
+                        console.log("original badgeId: " + badgeId);
+
+                        // update badgeId
+                        $.ajax({
+                            type: "POST",
+                            url: "../BPP2.asmx/GetBadge",
+                            data: parameters,
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function (msg) {
+                                if (relevanceCount > 20 && relevanceCount < 50)
+                                    badgeId = 1;
+                                else if (relevanceCount >= 50)
+                                    badgeId = 2;
+                                else
+                                    badgeId = 0;
+                                //badge = 2;
+                                console.log("after badgeId: " + badgeId);
+                            }
+
+                        });
+
+                    }
+                });
+            }
+        }
+    });
 
 // profile.html
 // show badges the user has earned

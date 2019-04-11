@@ -127,6 +127,38 @@ namespace BPP2
             sqlConnection.Close();
         }
 
+        //determine badgeId
+        [WebMethod(EnableSession = true)]
+        public string GetBadge(string employeeId, string badge)
+        {
+            string ret = "9";
+            //DataTable sqlDt = new DataTable("account");
+
+            string sqlConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
+            //var badgeId = Convert.ToInt32(badge);
+            string sqlSelect = "UPDATE employee SET Badges=@badgeValue " +
+                               "WHERE EmployeeID=@employeeIdValue";
+
+            MySqlConnection sqlConnection = new MySqlConnection(sqlConnectionString);
+            MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+            sqlCommand.Parameters.AddWithValue("@badgeValue", HttpUtility.UrlDecode(badge));
+            sqlCommand.Parameters.AddWithValue("@employeeIdValue", HttpUtility.UrlDecode(employeeId));
+
+            sqlConnection.Open();
+            try
+            {
+                sqlCommand.ExecuteNonQuery();
+                ret = badge;
+            }
+            catch (Exception e)
+            {
+                ret = badge + "EXCEPTION";
+            }
+            sqlConnection.Close();
+            return ret;
+        }
+
         //add topic and comment
         [WebMethod(EnableSession = true)]
         public void SubmitTopic(string employeeId, string topicTitle, string category, string location, string comment)
