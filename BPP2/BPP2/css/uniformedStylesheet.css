@@ -139,3 +139,8 @@ input {
     padding-left: 30px;
     padding-right: 30px;
 }
+
+.center {
+    max-width: 100%;
+    margin: auto;
+}
