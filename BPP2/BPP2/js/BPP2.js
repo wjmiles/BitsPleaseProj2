@@ -404,6 +404,8 @@ function showBadges() {
                             document.getElementById("badgeImg").src = "../images/4.png";
                         else if (accountArray[i].badge === 5)
                             document.getElementById("badgeImg").src = "../images/5.png";
+                        else
+                            document.getElementById("badgeId").innerHTML = "";
                     }
                     console.log(document.getElementById("badgeImg").src);
                 }
