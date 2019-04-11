@@ -165,7 +165,8 @@ namespace BPP2
         {
             string sqlConnectionSring = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
 
-            string sqlSelect = "INSERT INTO `topic` (`EmployeeID`, `TopicTitle`, `TopicCategory`, `TopicLocation`) VALUES (@employeeIdValue, @topicTitleValue, @categoryValue, @locationValue); SELECT @@IDENTITY;";
+            string sqlSelect = "INSERT INTO `topic` (`EmployeeID`, `TopicTitle`, `TopicCategory`, `TopicLocation`, `TopicRelevanceCounter`)" + 
+                               "VALUES (@employeeIdValue, @topicTitleValue, @categoryValue, @locationValue, 1); SELECT @@IDENTITY;";
 
             MySqlConnection sqlConnection = new MySqlConnection(sqlConnectionSring);
             MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
@@ -182,13 +183,13 @@ namespace BPP2
 
                 string sqlConnectionSring2 = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
 
-                string sqlSelect2 = "INSERT INTO `suggestions` (`TopicID`, `SuggestionContent`) VALUES(@topicIdValue, @commentValue);";
+                string sqlSelect2 = "INSERT INTO `suggestions` (`TopicID`, `EmployeeID`, `SuggestionContent`) VALUES(@topicIdValue, @employeeIdValue, @commentValue);";
 
                 MySqlConnection sqlConnection2 = new MySqlConnection(sqlConnectionSring2);
                 MySqlCommand sqlCommand2 = new MySqlCommand(sqlSelect2, sqlConnection2);
 
                 sqlCommand2.Parameters.Add(new MySqlParameter("@topicIdValue", topicID));
-
+                sqlCommand2.Parameters.AddWithValue("@employeeIdValue", HttpUtility.UrlDecode(employeeId));
                 sqlCommand2.Parameters.AddWithValue("@commentValue", HttpUtility.UrlDecode(comment));
 
                 sqlConnection2.Open();
@@ -212,22 +213,44 @@ namespace BPP2
         }
 
         [WebMethod(EnableSession = true)]
-        public void SubmitComment(string topicId, string comment)
+        public void SubmitComment(string topicId, string employeeId, string comment)
         {
             string sqlConnectionSring = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
 
-            string sqlSelect = "INSERT INTO suggestions (TopicID, SuggestionContent) VALUES (@topicIdValue, @commentValue);";
+            string sqlSelect = "INSERT INTO `suggestions` (`TopicID`, `EmployeeID`, `SuggestionContent`) VALUES (@topicIdValue, @employeeIdValue, @commentValue);";
 
             MySqlConnection sqlConnection = new MySqlConnection(sqlConnectionSring);
             MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
 
             sqlCommand.Parameters.AddWithValue("@topicIdValue", HttpUtility.UrlDecode(topicId));
+            sqlCommand.Parameters.AddWithValue("@employeeIdValue", HttpUtility.UrlDecode(employeeId));
             sqlCommand.Parameters.AddWithValue("@commentValue", HttpUtility.UrlDecode(comment));
 
             sqlConnection.Open();
             try
             {
                 sqlCommand.ExecuteNonQuery();
+
+                string sqlConnectionSring2 = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
+
+                string sqlSelect2 = "UPDATE topic SET TopicRelevanceCounter=TopicRelevanceCounter+1 WHERE TopicID=@topicIdValue";
+                
+                MySqlConnection sqlConnection2 = new MySqlConnection(sqlConnectionSring2);
+                MySqlCommand sqlCommand2 = new MySqlCommand(sqlSelect2, sqlConnection2);
+
+                sqlCommand2.Parameters.AddWithValue("@topicIdValue", HttpUtility.UrlDecode(topicId));
+
+                sqlConnection2.Open();
+                try
+                {
+                    sqlCommand2.ExecuteNonQuery();
+
+                }
+                catch (Exception e)
+                {
+                }
+                sqlConnection2.Close();
+                
             }
             catch (Exception e)
             {
@@ -317,6 +340,7 @@ namespace BPP2
                 {
                     SuggestionID = Convert.ToInt32(sqlDt.Rows[i]["SuggestionID"]),
                     TopicID = Convert.ToInt32(sqlDt.Rows[i]["TopicID"]),
+                    EmployeeID = sqlDt.Rows[i]["EmployeeID"].ToString(),
                     SuggestionContent = sqlDt.Rows[i]["SuggestionContent"].ToString(),
                     SuggestionAgreementCounter = Convert.ToInt32(sqlDt.Rows[i]["SuggestionAgreementCounter"])
                 });
@@ -326,7 +350,7 @@ namespace BPP2
 
         //change relevance of topic
         [WebMethod(EnableSession = true)]
-        public string updateRelevance(string newRelevance, string topicId)
+        public string UpdateRelevance(string newRelevance, string topicId)
         {
             string ret = "9";
             string sqlConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
@@ -356,7 +380,7 @@ namespace BPP2
 
         //change agree of suggestion
         [WebMethod(EnableSession = true)]
-        public string updateAgree(string newAgree, string suggestionId)
+        public string UpdateAgree(string newAgree, string suggestionId)
         {
             string ret = "9";
             string sqlConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;

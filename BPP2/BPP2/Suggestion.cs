@@ -9,6 +9,7 @@ namespace BPP2
     {
         public int SuggestionID;
         public int TopicID;
+        public string EmployeeID;
         public string SuggestionContent;
         public int SuggestionAgreementCounter;
     }

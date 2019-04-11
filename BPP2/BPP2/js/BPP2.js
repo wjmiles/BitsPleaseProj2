@@ -142,6 +142,8 @@ function addTopicToDatabase(topicTitle, category, location, comment) {
 //adds comment to the db
 function addCommentToDB(topicId) {
 
+    let storedParam = localStorage.getItem("employeeId");
+
     if (document.getElementById("commentTextArea").value !== "") {
         var comment = document.getElementById("commentTextArea").value;
     }
@@ -155,6 +157,7 @@ function addCommentToDB(topicId) {
 
     let webMethod = "../BPP2.asmx/SubmitComment";
     let parameters = "{\"topicId\":\"" + encodeURI(topicId) +
+                     "\",\"employeeId\":\"" + encodeURI(storedParam) +
                      "\",\"comment\":\"" + encodeURI(comment) + "\"}";
 
     $.ajax({
@@ -370,6 +373,7 @@ function getBadge(topicID) {
             }
         }
     });
+}
 
 // profile.html
 // show badges the user has earned
@@ -430,9 +434,9 @@ function GetTopics(selectObject) {
                             var liNode = document.createElement('li');
 
                             liNode.innerHTML = "<button onclick='newSuggestion(" + topicArray[i].TopicID + ")'>" + topicArray[i].Title + "</button>: " + " "
-                                             + "Relevance: " + topicArray[i].Relevance + " "
-                                             + "<button onclick='relevance(" + topicArray[i].TopicID + ", " + topicArray[i].Relevance + ", " + 1 + ")'>" + "<img src='../images/2.png' alt='Thumbs Up' height='17'>" + "</button>" 
-                                             + "<button onclick='relevance(" + topicArray[i].TopicID + ", " + topicArray[i].Relevance + ", " + -1 + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>";  
+                                + "Relevance: " + topicArray[i].Relevance + " "
+                                + "<button onclick='relevance(" + topicArray[i].TopicID + ", " + topicArray[i].Relevance + ", " + 1 + ")'>" + "<img src='../images/2.png' alt='Thumbs Up' height='17'>" + "</button>"
+                                + "<button onclick='relevance(" + topicArray[i].TopicID + ", " + topicArray[i].Relevance + ", " + -1 + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>";
 
                             list.appendChild(liNode);
                         }
@@ -457,9 +461,9 @@ function GetTopics(selectObject) {
                             var liNode = document.createElement('li');
 
                             liNode.innerHTML = "<button onclick='newSuggestion(" + topicArray[i].TopicID + ")'>" + topicArray[i].Title + "</button>: " + " "
-                                             + "Relevance: " + topicArray[i].Relevance + " "
-                                             + "<button onclick='relevance(" + topicArray[i].TopicID + ", " + topicArray[i].Relevance + ", " + 1 + ")'>" + "<img src='../images/2.png' alt='Thumbs Up' height='17'>" + "</button>"
-                                             + "<button onclick='relevance(" + topicArray[i].TopicID + ", " + topicArray[i].Relevance + ", " + -1 + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>"; 
+                                + "Relevance: " + topicArray[i].Relevance + " "
+                                + "<button onclick='relevance(" + topicArray[i].TopicID + ", " + topicArray[i].Relevance + ", " + 1 + ")'>" + "<img src='../images/2.png' alt='Thumbs Up' height='17'>" + "</button>"
+                                + "<button onclick='relevance(" + topicArray[i].TopicID + ", " + topicArray[i].Relevance + ", " + -1 + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>";
 
                             list.appendChild(liNode);
                         }
@@ -488,15 +492,15 @@ function FilterTopics(locationValue) {
             if (msg.d.length > 0) {
                 topicArray = msg.d;
                 for (let i = 0; i < topicArray.length; i++) {
-                    if (topicArray[i].Title !== null) {                   
+                    if (topicArray[i].Title !== null) {
                         var liNode = document.createElement('li');
 
                         liNode.innerHTML = "<button onclick='newSuggestion(" + topicArray[i].TopicID + ")'>" + topicArray[i].Title + "</button>: " + " "
-                                         + "Relevance: " + topicArray[i].Relevance + " "
-                                         + "<button onclick='relevance(" + topicArray[i].TopicID + ", " + topicArray[i].Relevance + ", " + 1 + ")'>" + "<img src='../images/2.png' alt='Thumbs Up' height='17'>" + "</button>"
-                                         + "<button onclick='relevance(" + topicArray[i].TopicID + ", " + topicArray[i].Relevance + ", " + -1 + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>";
+                            + "Relevance: " + topicArray[i].Relevance + " "
+                            + "<button onclick='relevance(" + topicArray[i].TopicID + ", " + topicArray[i].Relevance + ", " + 1 + ")'>" + "<img src='../images/2.png' alt='Thumbs Up' height='17'>" + "</button>"
+                            + "<button onclick='relevance(" + topicArray[i].TopicID + ", " + topicArray[i].Relevance + ", " + -1 + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>";
                         if (location === topicArray[i].Location) {
-                                list.appendChild(liNode);
+                            list.appendChild(liNode);
                         }
                     }
                 }
@@ -510,7 +514,7 @@ function FilterTopics(locationValue) {
 function FilterTopicsCategory(categoryValue) {
     if (categoryValue.value == 'Category') {
         document.getElementById('refreshButtonId').click();
-    } 
+    }
 
     var category;
     var list = document.getElementById('topicsContainer');
@@ -570,7 +574,7 @@ function newTopic() {
 function populateSuggestions(topicID) {
     var list = document.getElementById("viewComments");
     list.innerHTML = "";
-
+    //////
     $.ajax({
         type: "POST",
         url: "../BPP2.asmx/GetSuggestions",
@@ -586,11 +590,11 @@ function populateSuggestions(topicID) {
                             var pageSuggestion = suggestionArray[i].SuggestionContent;
                             var pageSuggestionAgreement = suggestionArray[i].SuggestionAgreementCounter;
                             var liNode = document.createElement('li');
-                            
+
                             liNode.innerHTML = pageSuggestion + "&nbsp;&nbsp;"
-                                             + "<button onclick='agree(" + suggestionArray[i].SuggestionID + ", " + suggestionArray[i].SuggestionAgreementCounter + ", " + 1 + ")'>" + "<img src='../images/2.png' alt='Thumbs Up' height='17'>" + "</button>"
-                                             + "<button onclick='agree(" + suggestionArray[i].SuggestionID + ", " + suggestionArray[i].SuggestionAgreementCounter + ", " + -1 + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>"
-                                             + "&nbsp;" + pageSuggestionAgreement;
+                                + "<button onclick='agree(" + suggestionArray[i].SuggestionID + ", " + suggestionArray[i].SuggestionAgreementCounter + ", " + 1 + ")'>" + "<img src='../images/2.png' alt='Thumbs Up' height='17'>" + "</button>"
+                                + "<button onclick='agree(" + suggestionArray[i].SuggestionID + ", " + suggestionArray[i].SuggestionAgreementCounter + ", " + -1 + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>"
+                                + "&nbsp;" + pageSuggestionAgreement;
 
                             list.appendChild(liNode);
                         }
@@ -628,7 +632,7 @@ function relevance(topicId, relevance, change) {
     let newRelevance = relevance + change;
     //console.log(newRelevance);
 
-    let webMethod = "../BPP2.asmx/updateRelevance";
+    let webMethod = "../BPP2.asmx/UpdateRelevance";
     let parameters = "{\"topicId\":\"" + encodeURI(topicId) +
         "\",\"newRelevance\":\"" + encodeURI(newRelevance) + "\" }";
 
@@ -652,7 +656,7 @@ function agree(suggestionId, agree, change) {
 
     let newAgree = agree + change;
 
-    let webMethod = "../BPP2.asmx/updateAgree";
+    let webMethod = "../BPP2.asmx/UpdateAgree";
     let parameters = "{\"suggestionId\":\"" + encodeURI(suggestionId) +
         "\",\"newAgree\":\"" + encodeURI(newAgree) + "\" }";
 
