@@ -143,4 +143,6 @@ input {
 .center {
     max-width: 100%;
     margin: auto;
+    float: left;
+    text-align: center;
 }

@@ -17,3 +17,15 @@ td { padding-top: 15px; }
 .formButton { 
 	margin-left: 20px;
 }
+
+.mainTable {
+	max-width: 100%;
+	margin-left: : auto;
+	margin-right: auto;
+	float: right;
+}
+
+.mainBody {
+	float: left;
+	margin: auto;
+}
