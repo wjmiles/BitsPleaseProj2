@@ -32,6 +32,7 @@ function logOn(employeeId, password) {
                 if (msg.d.length > 0) {
                     accountArray = msg.d;
                     localStorage.setItem("employeeId", accountArray[0].employeeId);
+                    localStorage.setItem("employeeId", accountArray[0].badge);
                     document.getElementById("employeeId").value = "";
                     document.getElementById("password").value = "";
                     window.open("../html/main.html", "_self");
@@ -364,6 +365,7 @@ function getBadge(topicID) {
                                     badgeId = 0;
                                 //badge = 2;
                                 console.log("after badgeId: " + badgeId);
+                                localStorage.setItem("badge", badgeId);
                             }
 
                         });
