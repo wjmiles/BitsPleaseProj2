@@ -32,7 +32,7 @@ function logOn(employeeId, password) {
                 if (msg.d.length > 0) {
                     accountArray = msg.d;
                     localStorage.setItem("employeeId", accountArray[0].employeeId);
-                    localStorage.setItem("employeeId", accountArray[0].badge);
+                    localStorage.setItem("badge", accountArray[0].badge);
                     document.getElementById("employeeId").value = "";
                     document.getElementById("password").value = "";
                     window.open("../html/main.html", "_self");
