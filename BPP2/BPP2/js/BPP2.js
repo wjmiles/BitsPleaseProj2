@@ -577,6 +577,7 @@ function newTopic() {
 //populates fields with topic data
 function populateSuggestions(topicID) {
     var list = document.getElementById("viewComments");
+    var user;
     list.innerHTML = "";
     //////
     $.ajax({
@@ -595,7 +596,29 @@ function populateSuggestions(topicID) {
                             var pageSuggestionAgreement = suggestionArray[i].SuggestionAgreementCounter;
                             var liNode = document.createElement('li');
 
-                            liNode.innerHTML = pageSuggestion + "&nbsp;&nbsp;"
+
+                            $.ajax({
+                                type: "POST",
+                                url: "../BPP2.asmx/GetTopics",
+                                //data: parameters,
+                                contentType: "application/json; charset=utf-8",
+                                dataType: "json",
+                                success: function (msg) {
+                                    if (msg.d.length > 0) {
+                                        topicArray = msg.d;
+                                        for (let i = 0; i < topicArray.length; i++) {
+                                            if (topicArray[i].Title !== null) {
+                                                if (topicArray[i].topicID == suggestionArray[i].topicID) {
+                                                    user = topicArray[i].employeeID;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                });
+
+
+                            liNode.innerHTML = user + ": " + pageSuggestion + "&nbsp;&nbsp;"
                                 + "<button onclick='agree(" + suggestionArray[i].SuggestionID + ", " + suggestionArray[i].SuggestionAgreementCounter + ", " + 1 + ")'>" + "<img src='../images/2.png' alt='Thumbs Up' height='17'>" + "</button>"
                                 + "<button onclick='agree(" + suggestionArray[i].SuggestionID + ", " + suggestionArray[i].SuggestionAgreementCounter + ", " + -1 + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>"
                                 + "&nbsp;" + pageSuggestionAgreement;
