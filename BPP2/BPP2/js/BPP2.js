@@ -57,8 +57,7 @@ function logOff() {
 //main.html
 //initalizes main.html for employee
 function loadMain() {
-    //console.log('set interval for pulling suggestions');
-    //window.setInterval(loadSuggestions, 5000);
+    window.setInterval(refreshTopicList, 7000);
     showName();
     loadSuggestions();
 }
@@ -676,6 +675,34 @@ function agree(suggestionId, agree, change) {
         success: function (msg) {
             console.log("yay");
             location.reload();
+        }
+    });
+}
+
+//main.html
+//checks if topics list nees to be refreshed
+function refreshTopicList() {
+    console.log('checking if refresh needed');
+
+    $.ajax({
+        type: "POST",
+        url: "../BPP2.asmx/GetTopics",
+        //data: parameters,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+            if (msg.d.length > 0) {
+                topicArray = msg.d;
+                var dbCount = topicArray.length;
+                var pageCount = document.getElementById("topicsContainer").getElementsByTagName("li").length; 
+
+                //console.log('db: ' + dbCount + ' current: ' + pageCount);
+
+                if (dbCount !== pageCount) {
+                    //console.log('refreshing list');
+                    document.getElementById('refreshButtonId').click();
+                }
+            }
         }
     });
 }
