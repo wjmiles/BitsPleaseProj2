@@ -258,6 +258,66 @@ namespace BPP2
             sqlConnection.Close();
         }
 
+        //////
+        //get topics Filtered for auto refresh
+        [WebMethod(EnableSession = true)]
+        public Topic[] GetTopicsFiltered(string category, string location)
+        {
+            string sqlConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
+            //sqlSelect = "SELECT * FROM topic WHERE TopicCategory=@categoryValue AND TopicLocation=@locationValue ORDER BY TopicRelevanceCounter @orderValue";
+            string sqlSelect = "";
+            if (category == "Category")
+            {
+                sqlSelect = "SELECT * FROM topic WHERE TopicLocation=@locationValue";
+            }
+            else if (location == "All")
+            {
+                sqlSelect = "SELECT * FROM topic WHERE TopicCategory=@categoryValue";
+            }
+            else if (category != "Category" && location != "All")
+            {
+                sqlSelect = "SELECT * FROM topic WHERE TopicCategory=@categoryValue AND TopicLocation=@locationValue";
+            }
+
+            MySqlConnection sqlConnection = new MySqlConnection(sqlConnectionString);
+            MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+            if (category == "Category")
+            {
+                sqlCommand.Parameters.AddWithValue("@locationValue", HttpUtility.UrlDecode(location));
+            }
+            else if (location == "All")
+            {
+                sqlCommand.Parameters.AddWithValue("@categoryValue", HttpUtility.UrlDecode(category));
+            }
+            else if (category != "Category" && location != "All")
+            {
+                sqlCommand.Parameters.AddWithValue("@categoryValue", HttpUtility.UrlDecode(category));
+                sqlCommand.Parameters.AddWithValue("@locationValue", HttpUtility.UrlDecode(location));
+            }
+           
+
+            MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
+            DataTable sqlDt = new DataTable();
+
+            sqlDa.Fill(sqlDt);
+
+            List<Topic> topics = new List<Topic>();
+            for (int i = 0; i < sqlDt.Rows.Count; i++)
+            {
+                topics.Add(new Topic
+                {
+                    TopicID = Convert.ToInt32(sqlDt.Rows[i]["TopicID"]),
+                    Title = sqlDt.Rows[i]["TopicTitle"].ToString(),
+                    Category = sqlDt.Rows[i]["TopicCategory"].ToString(),
+                    Location = sqlDt.Rows[i]["TopicLocation"].ToString(),
+                    Relevance = Convert.ToInt32(sqlDt.Rows[i]["TopicRelevanceCounter"])
+                });
+            }
+            return topics.ToArray();
+        }
+        //////
+
         //get topics
         [WebMethod(EnableSession = true)]
         public Topic[] GetTopics()

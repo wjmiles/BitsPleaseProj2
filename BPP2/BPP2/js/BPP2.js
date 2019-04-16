@@ -480,6 +480,12 @@ function GetTopics(selectObject) {
 //main.html
 //function to filter topics
 function FilterTopics(locationValue) {
+    if (locationValue.value == 'All') {
+        document.getElementById('refreshButtonId').click();
+    }
+
+    document.getElementById("category").value = "Category";
+
     var location;
     var list = document.getElementById('topicsContainer');
     list.innerHTML = "";
@@ -518,6 +524,8 @@ function FilterTopicsCategory(categoryValue) {
     if (categoryValue.value == 'Category') {
         document.getElementById('refreshButtonId').click();
     }
+
+    document.getElementById("location").value = "All";
 
     var category;
     var list = document.getElementById('topicsContainer');
@@ -577,7 +585,6 @@ function newTopic() {
 function populateSuggestions(topicID) {
     var list = document.getElementById("viewComments");
     list.innerHTML = "";
-    //////
     $.ajax({
         type: "POST",
         url: "../BPP2.asmx/GetSuggestions",
@@ -683,26 +690,56 @@ function agree(suggestionId, agree, change) {
 //checks if topics list nees to be refreshed
 function refreshTopicList() {
     console.log('checking if refresh needed');
+    if (document.getElementById("category").value == "Category" && document.getElementById("location").value == "All") {
+        $.ajax({
+            type: "POST",
+            url: "../BPP2.asmx/GetTopics",
+            //data: parameters,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                if (msg.d.length > 0) {
+                    topicArray = msg.d;
+                    var dbCount = topicArray.length;
+                    var pageCount = document.getElementById("topicsContainer").getElementsByTagName("li").length;
 
-    $.ajax({
-        type: "POST",
-        url: "../BPP2.asmx/GetTopics",
-        //data: parameters,
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (msg) {
-            if (msg.d.length > 0) {
-                topicArray = msg.d;
-                var dbCount = topicArray.length;
-                var pageCount = document.getElementById("topicsContainer").getElementsByTagName("li").length; 
+                    //console.log('db: ' + dbCount + ' current: ' + pageCount);
 
-                //console.log('db: ' + dbCount + ' current: ' + pageCount);
-
-                if (dbCount !== pageCount) {
-                    //console.log('refreshing list');
-                    document.getElementById('refreshButtonId').click();
+                    if (dbCount !== pageCount) {
+                        //console.log('refreshing list');
+                        document.getElementById('refreshButtonId').click();
+                    }
                 }
             }
-        }
-    });
+        });
+    }
+    else {
+        let category = document.getElementById("category").value;
+        let location = document.getElementById("location").value;
+
+        let parameters = "{\"category\":\"" + encodeURI(category) +
+            "\",\"location\":\"" + encodeURI(location) + "\" }";
+
+        $.ajax({
+            type: "POST",
+            url: "../BPP2.asmx/GetTopicsFiltered",
+            data: parameters,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+                if (msg.d.length > 0) {
+                    topicArray = msg.d;
+                    var dbCount = topicArray.length;
+                    var pageCount = document.getElementById("topicsContainer").getElementsByTagName("li").length;
+
+                    //console.log('db: ' + dbCount + ' current: ' + pageCount);
+
+                    if (dbCount !== pageCount) {
+                        //console.log('refreshing list');
+                        document.getElementById('refreshButtonId').click();
+                    }
+                }
+            }
+        });
+    }
 }
