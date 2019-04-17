@@ -11,17 +11,21 @@ var logOnAttempts = 0;
 //checks DB for employeeId and password and stores employeeId in localStorage for reference on other html pages
 function logOn(employeeId, password) {
 
+    document.getElementById("logOnButton").innerHTML = "Processing...";
+    document.getElementById("alertId").innerHTML = "";
+
     localStorage.clear();
     
     if (employeeId === "" ||
         password === "") {
         document.getElementById("alertId").innerHTML = "Please enter an ID and Password";
         document.getElementById("password").value = "";
+        document.getElementById("logOnButton").innerHTML = "Log On";
     }
     else {
         let webMethod = "../BPP2.asmx/LogOn";
         let parameters = "{\"employeeId\":\"" + encodeURI(employeeId) + "\",\"password\":\"" + encodeURI(password) + "\"}";
-
+    
         $.ajax({
             type: "POST",
             url: webMethod,
@@ -40,6 +44,7 @@ function logOn(employeeId, password) {
                 else {
                     document.getElementById("alertId").innerHTML = "Sign in Failed";
                     document.getElementById("password").value = "";
+                    document.getElementById("logOnButton").innerHTML = "Log On";
                 }
             }
         });
@@ -87,6 +92,9 @@ function loadSuggestionPage(topicID) {
 //submission.html
 //stores topic 
 function storeTopic() {
+
+    document.getElementById("submitTopicButtonId").innerHTML = "Processing...";
+
     var topicTitle, category, location, comment;
 
     topicTitle = document.getElementById("topicTitle").value;
@@ -96,6 +104,7 @@ function storeTopic() {
 
     if (topicTitle === "" || comment === "" || location === "Location") {
         console.log("Please fill in all information.");
+        document.getElementById("submitTopicButtonId").innerHTML = "Submit";
     }
     else {
         addTopicToDatabase(topicTitle, category, location, comment);
@@ -142,13 +151,16 @@ function addTopicToDatabase(topicTitle, category, location, comment) {
 //adds comment to the db
 function addCommentToDB(topicId) {
 
+    document.getElementById("submitCommentButtonId").innerHTML = "Processing...";
+
     let storedParam = localStorage.getItem("employeeId");
 
     if (document.getElementById("commentTextArea").value !== "") {
         var comment = document.getElementById("commentTextArea").value;
     }
     else {
-        alert("Enter a comment");
+        console.log("Enter a comment");
+        document.getElementById("submitCommentButtonId").innerHTML = "Submit";
         return;
     }
 
@@ -577,6 +589,7 @@ function newSuggestion(topicID) {
 //main.html
 //opens submission.html
 function newTopic() {
+    document.getElementById("newTopicButtonId").innerHTML = "Processing...";
     window.open("../html/submission.html", "_self");
 }
 
