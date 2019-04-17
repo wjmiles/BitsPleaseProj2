@@ -597,6 +597,7 @@ function newTopic() {
 //populates fields with topic data
 function populateSuggestions(topicID) {
     var list = document.getElementById("viewComments");
+    var commentCounter = 0;
     list.innerHTML = "";
     $.ajax({
         type: "POST",
@@ -615,12 +616,24 @@ function populateSuggestions(topicID) {
                             var user = suggestionArray[i].EmployeeID;
                             var liNode = document.createElement('li');
 
-                            liNode.innerHTML = user + ": " + pageSuggestion + "&nbsp;&nbsp;"
-                                + "<button onclick='agree(" + suggestionArray[i].SuggestionID + ", " + suggestionArray[i].SuggestionAgreementCounter + ", " + 1 + ")'>" + "<img src='../images/2.png' alt='Thumbs Up' height='17'>" + "</button>"
-                                + "<button onclick='agree(" + suggestionArray[i].SuggestionID + ", " + suggestionArray[i].SuggestionAgreementCounter + ", " + -1 + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>"
-                                + "&nbsp;" + pageSuggestionAgreement;
+                            if (commentCounter === 0) {
+                                liNode.innerHTML = pageSuggestion + "&nbsp;&nbsp;"
+                                    + "<button onclick='agree(" + suggestionArray[i].SuggestionID + ", " + suggestionArray[i].SuggestionAgreementCounter + ", " + 1 + ")'>" + "<img src='../images/2.png' alt='Thumbs Up' height='17'>" + "</button>"
+                                    + "<button onclick='agree(" + suggestionArray[i].SuggestionID + ", " + suggestionArray[i].SuggestionAgreementCounter + ", " + -1 + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>"
+                                    + "&nbsp;" + pageSuggestionAgreement;
 
-                            list.appendChild(liNode);
+                                list.appendChild(liNode);
+                                commentCounter += 1;
+                            }
+                            else if (commentCounter > 0) {
+                                liNode.innerHTML = user + ": " + pageSuggestion + "&nbsp;&nbsp;"
+                                    + "<button onclick='agree(" + suggestionArray[i].SuggestionID + ", " + suggestionArray[i].SuggestionAgreementCounter + ", " + 1 + ")'>" + "<img src='../images/2.png' alt='Thumbs Up' height='17'>" + "</button>"
+                                    + "<button onclick='agree(" + suggestionArray[i].SuggestionID + ", " + suggestionArray[i].SuggestionAgreementCounter + ", " + -1 + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>"
+                                    + "&nbsp;" + pageSuggestionAgreement;
+
+                                list.appendChild(liNode);
+                                commentCounter += 1;
+                            }
                         }
                     }
                 }
