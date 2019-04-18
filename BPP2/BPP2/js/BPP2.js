@@ -140,6 +140,7 @@ function addTopicToDatabase(topicTitle, category, location, comment) {
         dataType: "json",
         success: function (msg) {
             console.log(parameters);
+            window.open("../html/main.html", "_self");
         },
         error: function (e) {
             //alert("Probably didn't work :(");
@@ -759,6 +760,7 @@ function populateSuggestions(topicID) {
                                                 + "<button onclick='agree(" + suggestionArray[i].SuggestionID + ", " + suggestionArray[i].SuggestionAgreementCounter + ", " + -1 + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>"
                                                 + "&nbsp;" + pageSuggestionAgreement;
                                             list.appendChild(liNode);
+                                            commentCounter += 1;
                                         }
 
                                         else {
@@ -767,6 +769,7 @@ function populateSuggestions(topicID) {
                                                 + "<button onclick='agree(" + suggestionArray[i].SuggestionID + ", " + suggestionArray[i].SuggestionAgreementCounter + ", " + -1 + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>"
                                                 + "&nbsp;" + pageSuggestionAgreement;
                                             list.appendChild(liNode);
+                                            commentCounter += 1;
                                         }
                                     }
                                     else if (commentCounter > 0) {
@@ -784,6 +787,7 @@ function populateSuggestions(topicID) {
                                                 + "<button onclick='agree(" + suggestionArray[i].SuggestionID + ", " + suggestionArray[i].SuggestionAgreementCounter + ", " + -1 + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>"
                                                 + "&nbsp;" + pageSuggestionAgreement;
                                             list.appendChild(liNode);
+                                            commentCounter += 1;
                                         }
                                     }
                                 }
