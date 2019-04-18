@@ -29,7 +29,7 @@ namespace BPP2
         {
             string sqlConnectionSring = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
 
-            string sqlSelect = "SELECT EmployeeID FROM employee WHERE EmployeeID=@employeeIdValue and Password=@passwordValue";
+            string sqlSelect = "SELECT EmployeeID, Admin FROM employee WHERE EmployeeID=@employeeIdValue and Password=@passwordValue";
             MySqlConnection sqlConnection = new MySqlConnection(sqlConnectionSring);
             MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
 
@@ -46,7 +46,8 @@ namespace BPP2
                 {
                     accountTemp.Add(new Account
                     {
-                        employeeId = sqlDt.Rows[i]["EmployeeID"].ToString()
+                        employeeId = sqlDt.Rows[i]["EmployeeID"].ToString(),
+                        admin = Convert.ToInt32(sqlDt.Rows[i]["Admin"])
                         //password = sqlDt.Rows[i]["Password"].ToString(),
                         //firstName = sqlDt.Rows[i]["FirstName"].ToString(),
                         //lastName = sqlDt.Rows[i]["LastName"].ToString(),
@@ -459,6 +460,34 @@ namespace BPP2
 
             sqlCommand.Parameters.AddWithValue("@newAgreeValue", HttpUtility.UrlDecode(newAgree));
             sqlCommand.Parameters.AddWithValue("@suggestionIdValue", HttpUtility.UrlDecode(suggestionId));
+
+            sqlConnection.Open();
+            try
+            {
+                //ret = topicId;
+                ret = "good";
+                sqlCommand.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                ret = "bad";
+                //ret = topicId+10000;
+            }
+            sqlConnection.Close();
+            return ret;
+        }
+
+        [WebMethod(EnableSession = true)]
+        public string RemoveTopic(string topicId)
+        {
+            string ret = "9";
+            string sqlConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
+            string sqlSelect = "UPDATE topic SET Removed=1 WHERE TopicID=@topicIdValue";
+
+            MySqlConnection sqlConnection = new MySqlConnection(sqlConnectionString);
+            MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+            sqlCommand.Parameters.AddWithValue("@topicIdValue", HttpUtility.UrlDecode(topicId));
 
             sqlConnection.Open();
             try

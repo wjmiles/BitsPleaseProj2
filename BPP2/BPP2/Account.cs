@@ -15,5 +15,6 @@ namespace BPP2
         public string department;
         public string location;
         public int    badge;
+        public int    admin;
     }
 }
