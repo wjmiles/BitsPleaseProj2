@@ -759,7 +759,7 @@ function populateSuggestions(topicID) {
                                     }
                                 }
                                 else {
-                                    liNode.innerHTML = pageSuggestion + "&nbsp;&nbsp;"
+                                    liNode.innerHTML = user + ": " + pageSuggestion + "&nbsp;&nbsp;"
                                         + "<button onclick='agree(" + suggestionArray[i].SuggestionID + ", " + suggestionArray[i].SuggestionAgreementCounter + ", " + 1 + ")'>" + "<img src='../images/2.png' alt='Thumbs Up' height='17'>" + "</button>"
                                         + "<button onclick='agree(" + suggestionArray[i].SuggestionID + ", " + suggestionArray[i].SuggestionAgreementCounter + ", " + -1 + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>"
                                         + "&nbsp;" + pageSuggestionAgreement;
