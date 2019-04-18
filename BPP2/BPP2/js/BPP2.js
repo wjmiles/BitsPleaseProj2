@@ -449,19 +449,19 @@ function GetTopics(selectObject) {
                             var liNode = document.createElement('li');
                             if (topicArray[i].Resolved === 1) {
                                 console.log(topicArray[i].Title);
-                                liNode.innerHTML = "<button onclick='newSuggestion(" + topicArray[i].TopicID + ")'>" + "<b>" + topicArray[i].Title + "</b>" + "</button>: " + " "
-                                    + "Relevance: " + topicArray[i].Relevance + " "
+                                liNode.innerHTML = topicArray[i].Relevance
                                     + "<button onclick='relevance(" + topicArray[i].TopicID + ", " + topicArray[i].Relevance + ", " + 1 + ")'>" + "<img src='../images/2.png' alt='Thumbs Up' height='17'>" + "</button>"
-                                    + "<button onclick='relevance(" + topicArray[i].TopicID + ", " + topicArray[i].Relevance + ", " + -1 + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>";
+                                    + "<button onclick='relevance(" + topicArray[i].TopicID + ", " + topicArray[i].Relevance + ", " + -1 + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>"
+                                    + "<button onclick='newSuggestion(" + topicArray[i].TopicID + ")'>" + topicArray[i].Title + "</button> ";
                                 if (topicArray[i].Removed === 0) {
                                     list.appendChild(liNode);
                                 }
                             }
                             else {
-                                liNode.innerHTML = "<button onclick='newSuggestion(" + topicArray[i].TopicID + ")'>" + topicArray[i].Title + "</button>: " + " "
-                                    + "Relevance: " + topicArray[i].Relevance + " "
+                                liNode.innerHTML = topicArray[i].Relevance
                                     + "<button onclick='relevance(" + topicArray[i].TopicID + ", " + topicArray[i].Relevance + ", " + 1 + ")'>" + "<img src='../images/2.png' alt='Thumbs Up' height='17'>" + "</button>"
-                                    + "<button onclick='relevance(" + topicArray[i].TopicID + ", " + topicArray[i].Relevance + ", " + -1 + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>";
+                                    + "<button onclick='relevance(" + topicArray[i].TopicID + ", " + topicArray[i].Relevance + ", " + -1 + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>"
+                                    + "<button onclick='newSuggestion(" + topicArray[i].TopicID + ")'>" + topicArray[i].Title + "</button> ";
                                 if (topicArray[i].Removed === 0) {
                                     list.appendChild(liNode);
                                 }
@@ -488,19 +488,19 @@ function GetTopics(selectObject) {
                             var liNode = document.createElement('li');
                             if (topicArray[i].Resolved === 1) {
                                 console.log(topicArray[i].Title);
-                                liNode.innerHTML = "<button onclick='newSuggestion(" + topicArray[i].TopicID + ")'>" + "<b>" + topicArray[i].Title + "</b>" + "</button>: " + " "
-                                    + "Relevance: " + topicArray[i].Relevance + " "
+                                liNode.innerHTML = topicArray[i].Relevance
                                     + "<button onclick='relevance(" + topicArray[i].TopicID + ", " + topicArray[i].Relevance + ", " + 1 + ")'>" + "<img src='../images/2.png' alt='Thumbs Up' height='17'>" + "</button>"
-                                    + "<button onclick='relevance(" + topicArray[i].TopicID + ", " + topicArray[i].Relevance + ", " + -1 + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>";
+                                    + "<button onclick='relevance(" + topicArray[i].TopicID + ", " + topicArray[i].Relevance + ", " + -1 + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>"
+                                    + "<button onclick='newSuggestion(" + topicArray[i].TopicID + ")'>" + topicArray[i].Title + "</button> ";
                                 if (topicArray[i].Removed === 0) {
                                     list.appendChild(liNode);
                                 }
                             }
                             else {
-                                liNode.innerHTML = "<button onclick='newSuggestion(" + topicArray[i].TopicID + ")'>" + topicArray[i].Title + "</button>: " + " "
-                                    + "Relevance: " + topicArray[i].Relevance + " "
+                                liNode.innerHTML = topicArray[i].Relevance
                                     + "<button onclick='relevance(" + topicArray[i].TopicID + ", " + topicArray[i].Relevance + ", " + 1 + ")'>" + "<img src='../images/2.png' alt='Thumbs Up' height='17'>" + "</button>"
-                                    + "<button onclick='relevance(" + topicArray[i].TopicID + ", " + topicArray[i].Relevance + ", " + -1 + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>";
+                                    + "<button onclick='relevance(" + topicArray[i].TopicID + ", " + topicArray[i].Relevance + ", " + -1 + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>"
+                                    + "<button onclick='newSuggestion(" + topicArray[i].TopicID + ")'>" + topicArray[i].Title + "</button> ";
                                 if (topicArray[i].Removed === 0) {
                                     list.appendChild(liNode);
                                 }
@@ -541,19 +541,19 @@ function FilterTopics(locationValue) {
                         var liNode = document.createElement('li');
                         if (topicArray[i].Resolved === 1) {
                             console.log(topicArray[i].Title);
-                            liNode.innerHTML = "<button onclick='newSuggestion(" + topicArray[i].TopicID + ")'>" + "<b>" + topicArray[i].Title + "</b>" + "</button>: " + " "
-                                + "Relevance: " + topicArray[i].Relevance + " "
+                            liNode.innerHTML = topicArray[i].Relevance
                                 + "<button onclick='relevance(" + topicArray[i].TopicID + ", " + topicArray[i].Relevance + ", " + 1 + ")'>" + "<img src='../images/2.png' alt='Thumbs Up' height='17'>" + "</button>"
-                                + "<button onclick='relevance(" + topicArray[i].TopicID + ", " + topicArray[i].Relevance + ", " + -1 + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>";
+                                + "<button onclick='relevance(" + topicArray[i].TopicID + ", " + topicArray[i].Relevance + ", " + -1 + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>"
+                                + "<button onclick='newSuggestion(" + topicArray[i].TopicID + ")'>" + topicArray[i].Title + "</button> ";
                             if (topicArray[i].Removed === 0) {
                                 list.appendChild(liNode);
                             }
                         }
                         else {
-                            liNode.innerHTML = "<button onclick='newSuggestion(" + topicArray[i].TopicID + ")'>" + topicArray[i].Title + "</button>: " + " "
-                                + "Relevance: " + topicArray[i].Relevance + " "
+                            liNode.innerHTML = topicArray[i].Relevance
                                 + "<button onclick='relevance(" + topicArray[i].TopicID + ", " + topicArray[i].Relevance + ", " + 1 + ")'>" + "<img src='../images/2.png' alt='Thumbs Up' height='17'>" + "</button>"
-                                + "<button onclick='relevance(" + topicArray[i].TopicID + ", " + topicArray[i].Relevance + ", " + -1 + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>";
+                                + "<button onclick='relevance(" + topicArray[i].TopicID + ", " + topicArray[i].Relevance + ", " + -1 + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>"
+                                + "<button onclick='newSuggestion(" + topicArray[i].TopicID + ")'>" + topicArray[i].Title + "</button> ";
                             if (topicArray[i].Removed === 0) {
                                 list.appendChild(liNode);
                             }
@@ -593,19 +593,19 @@ function FilterTopicsCategory(categoryValue) {
                         var liNode = document.createElement('li');
                         if (topicArray[i].Resolved === 1) {
                             console.log(topicArray[i].Title);
-                            liNode.innerHTML = "<button onclick='newSuggestion(" + topicArray[i].TopicID + ")'>" + "<b>" + topicArray[i].Title + "</b>" + "</button>: " + " "
-                                + "Relevance: " + topicArray[i].Relevance + " "
+                            liNode.innerHTML = topicArray[i].Relevance
                                 + "<button onclick='relevance(" + topicArray[i].TopicID + ", " + topicArray[i].Relevance + ", " + 1 + ")'>" + "<img src='../images/2.png' alt='Thumbs Up' height='17'>" + "</button>"
-                                + "<button onclick='relevance(" + topicArray[i].TopicID + ", " + topicArray[i].Relevance + ", " + -1 + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>";
+                                + "<button onclick='relevance(" + topicArray[i].TopicID + ", " + topicArray[i].Relevance + ", " + -1 + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>"
+                                + "<button onclick='newSuggestion(" + topicArray[i].TopicID + ")'>" + topicArray[i].Title + "</button> ";
                             if (topicArray[i].Removed === 0) {
                                 list.appendChild(liNode);
                             }
                         }
                         else {
-                            liNode.innerHTML = "<button onclick='newSuggestion(" + topicArray[i].TopicID + ")'>" + topicArray[i].Title + "</button>: " + " "
-                                + "Relevance: " + topicArray[i].Relevance + " "
+                            liNode.innerHTML = topicArray[i].Relevance
                                 + "<button onclick='relevance(" + topicArray[i].TopicID + ", " + topicArray[i].Relevance + ", " + 1 + ")'>" + "<img src='../images/2.png' alt='Thumbs Up' height='17'>" + "</button>"
-                                + "<button onclick='relevance(" + topicArray[i].TopicID + ", " + topicArray[i].Relevance + ", " + -1 + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>";
+                                + "<button onclick='relevance(" + topicArray[i].TopicID + ", " + topicArray[i].Relevance + ", " + -1 + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>"
+                                + "<button onclick='newSuggestion(" + topicArray[i].TopicID + ")'>" + topicArray[i].Title + "</button> ";
                             if (topicArray[i].Removed === 0) {
                                 list.appendChild(liNode);
                             }
