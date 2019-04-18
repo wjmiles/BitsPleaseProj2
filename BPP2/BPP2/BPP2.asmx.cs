@@ -504,5 +504,89 @@ namespace BPP2
             sqlConnection.Close();
             return ret;
         }
+
+        [WebMethod(EnableSession = true)]
+        public string RemoveSuggestion(string suggestionId)
+        {
+            string ret = "9";
+            string sqlConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
+            string sqlSelect = "UPDATE suggestions SET Removed=1 WHERE SuggestionID=@suggestionIdValue";
+
+            MySqlConnection sqlConnection = new MySqlConnection(sqlConnectionString);
+            MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+            sqlCommand.Parameters.AddWithValue("@suggestionIdValue", HttpUtility.UrlDecode(suggestionId));
+
+            sqlConnection.Open();
+            try
+            {
+                //ret = topicId;
+                ret = "good";
+                sqlCommand.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                ret = "bad";
+                //ret = topicId+10000;
+            }
+            sqlConnection.Close();
+            return ret;
+        }
+
+        [WebMethod(EnableSession = true)]
+        public string MakeSolution(string suggestionId)
+        {
+            string ret = "9";
+            string sqlConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
+            string sqlSelect = "UPDATE suggestions SET Solution=1 WHERE SuggestionID=@suggestionIdValue";
+
+            MySqlConnection sqlConnection = new MySqlConnection(sqlConnectionString);
+            MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+            sqlCommand.Parameters.AddWithValue("@suggestionIdValue", HttpUtility.UrlDecode(suggestionId));
+
+            sqlConnection.Open();
+            try
+            {
+                //ret = topicId;
+                ret = "good";
+                sqlCommand.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                ret = "bad";
+                //ret = topicId+10000;
+            }
+            sqlConnection.Close();
+            return ret;
+        }
+
+        [WebMethod(EnableSession = true)]
+        public string MakeResolved(string topicId)
+        {
+            string ret = "9";
+            string sqlConnectionString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
+            string sqlSelect = "UPDATE topic SET Resolved=1 WHERE TopicID=@topicIdValue";
+
+            MySqlConnection sqlConnection = new MySqlConnection(sqlConnectionString);
+            MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+            sqlCommand.Parameters.AddWithValue("@topicIdValue", HttpUtility.UrlDecode(topicId));
+
+            sqlConnection.Open();
+            try
+            {
+                //ret = topicId;
+                ret = "good";
+                sqlCommand.ExecuteNonQuery();
+            }
+            catch (Exception e)
+            {
+                ret = "bad";
+                //ret = topicId+10000;
+            }
+            sqlConnection.Close();
+            return ret;
+        }
     }
 }

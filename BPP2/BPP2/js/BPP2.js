@@ -142,7 +142,7 @@ function addTopicToDatabase(topicTitle, category, location, comment) {
             console.log(parameters);
         },
         error: function (e) {
-            alert("Probably didn't work :(");
+            //alert("Probably didn't work :(");
             //console.log(parameters);
         }
     });
@@ -723,49 +723,68 @@ function populateSuggestions(topicID) {
                             var pageSuggestionAgreement = suggestionArray[i].SuggestionAgreementCounter;
                             var user = suggestionArray[i].EmployeeID;
                             var liNode = document.createElement('li');
-
-                            if (commentCounter === 0) {
-                                if (suggestionArray[i].Solution === 1) {
-                                    liNode.innerHTML = "<b>" + pageSuggestion + "</b>&nbsp;&nbsp;"
+                            if (localStorage.getItem("admin") === "1") {
+                                if (suggestionArray[i].Removed === 0) {
+                                    if (suggestionArray[i].Solution === 1) {
+                                        liNode.innerHTML = user + ": <b>" + pageSuggestion + "</b>&nbsp;&nbsp;"
+                                            + "<button onclick='agree(" + suggestionArray[i].SuggestionID + ", " + suggestionArray[i].SuggestionAgreementCounter + ", " + 1 + ")'>" + "<img src='../images/2.png' alt='Thumbs Up' height='17'>" + "</button>"
+                                            + "<button onclick='agree(" + suggestionArray[i].SuggestionID + ", " + suggestionArray[i].SuggestionAgreementCounter + ", " + -1 + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>"
+                                            + "&nbsp;" + pageSuggestionAgreement;
+                                        list.appendChild(liNode);
+                                    }
+                                    else {
+                                        liNode.innerHTML = user + ": " + pageSuggestion + "&nbsp;&nbsp;"
+                                            + "<button onclick='agree(" + suggestionArray[i].SuggestionID + ", " + suggestionArray[i].SuggestionAgreementCounter + ", " + 1 + ")'>" + "<img src='../images/2.png' alt='Thumbs Up' height='17'>" + "</button>"
+                                            + "<button onclick='agree(" + suggestionArray[i].SuggestionID + ", " + suggestionArray[i].SuggestionAgreementCounter + ", " + -1 + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>"
+                                            + "&nbsp;" + pageSuggestionAgreement
+                                            + "&nbsp;<button onclick='makeSolution(" + suggestionArray[i].SuggestionID + ", " + suggestionArray[i].TopicID + ")'><b>Solution</b></button>"
+                                            + "&nbsp;<button onclick='removeSuggestion(" + suggestionArray[i].SuggestionID + ")'><b>Remove</b></button>";
+                                        list.appendChild(liNode);
+                                    }
+                                }
+                                else if (suggestionArray[i].Removed === 1) {
+                                    liNode.innerHTML = user + ": <strike>" + pageSuggestion + "</strike>&nbsp;&nbsp;"
                                         + "<button onclick='agree(" + suggestionArray[i].SuggestionID + ", " + suggestionArray[i].SuggestionAgreementCounter + ", " + 1 + ")'>" + "<img src='../images/2.png' alt='Thumbs Up' height='17'>" + "</button>"
                                         + "<button onclick='agree(" + suggestionArray[i].SuggestionID + ", " + suggestionArray[i].SuggestionAgreementCounter + ", " + -1 + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>"
                                         + "&nbsp;" + pageSuggestionAgreement;
-                                    if (suggestionArray[i].Removed === 0) {
-                                        list.appendChild(liNode);
-                                        commentCounter += 1;
-                                    }
+                                    list.appendChild(liNode);
                                 }
-                                else {
-                                    liNode.innerHTML = pageSuggestion + "&nbsp;&nbsp;"
-                                        + "<button onclick='agree(" + suggestionArray[i].SuggestionID + ", " + suggestionArray[i].SuggestionAgreementCounter + ", " + 1 + ")'>" + "<img src='../images/2.png' alt='Thumbs Up' height='17'>" + "</button>"
-                                        + "<button onclick='agree(" + suggestionArray[i].SuggestionID + ", " + suggestionArray[i].SuggestionAgreementCounter + ", " + -1 + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>"
-                                        + "&nbsp;" + pageSuggestionAgreement;
-                                    if (suggestionArray[i].Removed === 0) {
-                                        list.appendChild(liNode);
-                                        commentCounter += 1;
-                                    }
-                                }
-                                
                             }
-                            else if (commentCounter > 0) {
-                                if (suggestionArray[i].Solution === 1) {
-                                    liNode.innerHTML = user + ": <b>" + pageSuggestion + "</b>&nbsp;&nbsp;"
-                                        + "<button onclick='agree(" + suggestionArray[i].SuggestionID + ", " + suggestionArray[i].SuggestionAgreementCounter + ", " + 1 + ")'>" + "<img src='../images/2.png' alt='Thumbs Up' height='17'>" + "</button>"
-                                        + "<button onclick='agree(" + suggestionArray[i].SuggestionID + ", " + suggestionArray[i].SuggestionAgreementCounter + ", " + -1 + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>"
-                                        + "&nbsp;" + pageSuggestionAgreement;
-                                    if (suggestionArray[i].Removed === 0) {
-                                        list.appendChild(liNode);
-                                        commentCounter += 1;
+                            else {
+                                if (suggestionArray[i].Removed === 0) {
+                                    if (commentCounter === 0) {
+                                        if (suggestionArray[i].Solution === 1) {
+                                            liNode.innerHTML = "<b>" + pageSuggestion + "</b>&nbsp;&nbsp;"
+                                                + "<button onclick='agree(" + suggestionArray[i].SuggestionID + ", " + suggestionArray[i].SuggestionAgreementCounter + ", " + 1 + ")'>" + "<img src='../images/2.png' alt='Thumbs Up' height='17'>" + "</button>"
+                                                + "<button onclick='agree(" + suggestionArray[i].SuggestionID + ", " + suggestionArray[i].SuggestionAgreementCounter + ", " + -1 + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>"
+                                                + "&nbsp;" + pageSuggestionAgreement;
+                                            list.appendChild(liNode);
+                                        }
+
+                                        else {
+                                            liNode.innerHTML = pageSuggestion + "&nbsp;&nbsp;"
+                                                + "<button onclick='agree(" + suggestionArray[i].SuggestionID + ", " + suggestionArray[i].SuggestionAgreementCounter + ", " + 1 + ")'>" + "<img src='../images/2.png' alt='Thumbs Up' height='17'>" + "</button>"
+                                                + "<button onclick='agree(" + suggestionArray[i].SuggestionID + ", " + suggestionArray[i].SuggestionAgreementCounter + ", " + -1 + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>"
+                                                + "&nbsp;" + pageSuggestionAgreement;
+                                            list.appendChild(liNode);
+                                        }
                                     }
-                                }
-                                else {
-                                    liNode.innerHTML = user + ": " + pageSuggestion + "&nbsp;&nbsp;"
-                                        + "<button onclick='agree(" + suggestionArray[i].SuggestionID + ", " + suggestionArray[i].SuggestionAgreementCounter + ", " + 1 + ")'>" + "<img src='../images/2.png' alt='Thumbs Up' height='17'>" + "</button>"
-                                        + "<button onclick='agree(" + suggestionArray[i].SuggestionID + ", " + suggestionArray[i].SuggestionAgreementCounter + ", " + -1 + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>"
-                                        + "&nbsp;" + pageSuggestionAgreement;
-                                    if (suggestionArray[i].Removed === 0) {
-                                        list.appendChild(liNode);
-                                        commentCounter += 1;
+                                    else if (commentCounter > 0) {
+                                        if (suggestionArray[i].Solution === 1) {
+                                            liNode.innerHTML = user + ": <b>" + pageSuggestion + "</b>&nbsp;&nbsp;"
+                                                + "<button onclick='agree(" + suggestionArray[i].SuggestionID + ", " + suggestionArray[i].SuggestionAgreementCounter + ", " + 1 + ")'>" + "<img src='../images/2.png' alt='Thumbs Up' height='17'>" + "</button>"
+                                                + "<button onclick='agree(" + suggestionArray[i].SuggestionID + ", " + suggestionArray[i].SuggestionAgreementCounter + ", " + -1 + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>"
+                                                + "&nbsp;" + pageSuggestionAgreement;
+                                            list.appendChild(liNode);
+                                            commentCounter += 1;
+                                        }
+                                        else {
+                                            liNode.innerHTML = user + ": " + pageSuggestion + "&nbsp;&nbsp;"
+                                                + "<button onclick='agree(" + suggestionArray[i].SuggestionID + ", " + suggestionArray[i].SuggestionAgreementCounter + ", " + 1 + ")'>" + "<img src='../images/2.png' alt='Thumbs Up' height='17'>" + "</button>"
+                                                + "<button onclick='agree(" + suggestionArray[i].SuggestionID + ", " + suggestionArray[i].SuggestionAgreementCounter + ", " + -1 + ")'>" + "<img src='../images/2.5.png' alt='Thumbs Up' height='17'>" + "</button>"
+                                                + "&nbsp;" + pageSuggestionAgreement;
+                                            list.appendChild(liNode);
+                                        }
                                     }
                                 }
                             }
@@ -848,10 +867,64 @@ function agree(suggestionId, agree, change) {
 }
 
 function removeTopic(topicId) {
-    console.log("remove " + topicId);
+    //console.log("remove " + topicId);
 
     let webMethod = "../BPP2.asmx/RemoveTopic";
     let parameters = "{\"topicId\":\"" + encodeURI(topicId) + "\" }";
+
+    $.ajax({
+        type: "POST",
+        url: webMethod,
+        data: parameters,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+            //console.log("yay");
+            location.reload();
+        }
+    });
+}
+
+function makeSolution(suggestionId, topicId) {
+    //console.log("Solution " + suggestionId);
+
+    let webMethod1 = "../BPP2.asmx/MakeResolved";
+    let parameters1 = "{\"topicId\":\"" + encodeURI(topicId) + "\" }";
+    //alert("MakeResolved " + topicId);
+    $.ajax({
+        type: "POST",
+        url: webMethod1,
+        data: parameters1,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+            //console.log("yay");
+        }
+    });
+
+    let webMethod0 = "../BPP2.asmx/MakeSolution";
+    let parameters0 = "{\"suggestionId\":\"" + encodeURI(suggestionId) + "\" }";
+
+    $.ajax({
+        type: "POST",
+        url: webMethod0,
+        data: parameters0,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+            //console.log("yay");
+            location.reload();
+        }
+    });
+
+
+}
+
+function removeSuggestion(suggestionId) {
+    //console.log("Remove " + suggestionId);
+
+    let webMethod = "../BPP2.asmx/RemoveSuggestion";
+    let parameters = "{\"suggestionId\":\"" + encodeURI(suggestionId) + "\" }";
 
     $.ajax({
         type: "POST",
