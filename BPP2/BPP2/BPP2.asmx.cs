@@ -311,7 +311,9 @@ namespace BPP2
                     Title = sqlDt.Rows[i]["TopicTitle"].ToString(),
                     Category = sqlDt.Rows[i]["TopicCategory"].ToString(),
                     Location = sqlDt.Rows[i]["TopicLocation"].ToString(),
-                    Relevance = Convert.ToInt32(sqlDt.Rows[i]["TopicRelevanceCounter"])
+                    Relevance = Convert.ToInt32(sqlDt.Rows[i]["TopicRelevanceCounter"]),
+                    Resolved = Convert.ToInt32(sqlDt.Rows[i]["Resolved"]),
+                    Removed = Convert.ToInt32(sqlDt.Rows[i]["Removed"])
                 });
             }
             return topics.ToArray();
@@ -342,7 +344,9 @@ namespace BPP2
                     Title = sqlDt.Rows[i]["TopicTitle"].ToString(),
                     Category = sqlDt.Rows[i]["TopicCategory"].ToString(),
                     Location = sqlDt.Rows[i]["TopicLocation"].ToString(),
-                    Relevance = Convert.ToInt32(sqlDt.Rows[i]["TopicRelevanceCounter"])
+                    Relevance = Convert.ToInt32(sqlDt.Rows[i]["TopicRelevanceCounter"]),
+                    Resolved = Convert.ToInt32(sqlDt.Rows[i]["Resolved"]),
+                    Removed = Convert.ToInt32(sqlDt.Rows[i]["Removed"])
                 });
             }
             return topics.ToArray();
@@ -372,7 +376,9 @@ namespace BPP2
                     Title = sqlDt.Rows[i]["TopicTitle"].ToString(),
                     Category = sqlDt.Rows[i]["TopicCategory"].ToString(),
                     Location = sqlDt.Rows[i]["TopicCategory"].ToString(),
-                    Relevance = Convert.ToInt32(sqlDt.Rows[i]["TopicRelevanceCounter"])
+                    Relevance = Convert.ToInt32(sqlDt.Rows[i]["TopicRelevanceCounter"]),
+                    Resolved = Convert.ToInt32(sqlDt.Rows[i]["Resolved"]),
+                    Removed = Convert.ToInt32(sqlDt.Rows[i]["Removed"])
                 });
             }
             return topics.ToArray();
@@ -402,7 +408,9 @@ namespace BPP2
                     TopicID = Convert.ToInt32(sqlDt.Rows[i]["TopicID"]),
                     EmployeeID = sqlDt.Rows[i]["EmployeeID"].ToString(),
                     SuggestionContent = sqlDt.Rows[i]["SuggestionContent"].ToString(),
-                    SuggestionAgreementCounter = Convert.ToInt32(sqlDt.Rows[i]["SuggestionAgreementCounter"])
+                    SuggestionAgreementCounter = Convert.ToInt32(sqlDt.Rows[i]["SuggestionAgreementCounter"]),
+                    Solution = Convert.ToInt32(sqlDt.Rows[i]["Solution"]),
+                    Removed = Convert.ToInt32(sqlDt.Rows[i]["Removed"])
                 });
             }
             return suggestions.ToArray();

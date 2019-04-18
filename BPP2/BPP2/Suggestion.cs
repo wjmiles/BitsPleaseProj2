@@ -12,5 +12,7 @@ namespace BPP2
         public string EmployeeID;
         public string SuggestionContent;
         public int SuggestionAgreementCounter;
+        public int Solution;
+        public int Removed;
     }
 }

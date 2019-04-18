@@ -13,5 +13,7 @@ namespace BPP2
         public string Category;
         public string Location;
         public int Relevance;
+        public int Resolved;
+        public int Removed;
     }
 }
